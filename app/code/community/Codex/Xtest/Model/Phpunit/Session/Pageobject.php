@@ -92,4 +92,11 @@ class Codex_Xtest_Model_Phpunit_Session_Pageobject
     public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session = NULL)
     {
     }
+
+    public function reset()
+    {
+        self::$session=null;
+        self::$mainWindow=null;
+    }
+
 }

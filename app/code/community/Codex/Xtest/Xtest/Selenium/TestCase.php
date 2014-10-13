@@ -50,6 +50,7 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
     protected function setUpSessionStrategy($params)
     {
         self::$browserSessionStrategy = new Codex_Xtest_Model_Phpunit_Session_Pageobject();
+        self::$browserSessionStrategy->reset();
         $this->localSessionStrategy = self::$browserSessionStrategy;
     }
 
