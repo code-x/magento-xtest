@@ -12,13 +12,13 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
     {
         /** @var $model Codex_Xtest_Xtest_Pageobject_Abstract */
         $model = Xtest::getXtest($modelClass);
+        $model->setTestcase($this);
 
         $model->setBrowser($this->getBrowser());
         $model->setBrowserUrl(Mage::getBaseUrl());
 
-        $model->shareSession(true);
+        $model->setUpSessionStrategy(null);
         $model->prepareSession();
-        $model->setTestcase($this);
 
         return $model;
     }
@@ -26,10 +26,12 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
     protected function setUp()
     {
         parent::setUp();
+
         $this->_screenshots = array();
         $this->setBrowser('firefox'); // TODO
         $this->setBrowserUrl(Mage::getBaseUrl());
-        $this->shareSession(true);
+
+        $this->setUpSessionStrategy(null);
 
         Xtest::initFrontend();
     }
@@ -45,10 +47,18 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
         return $this;
     }
 
+    protected function setUpSessionStrategy($params)
+    {
+        self::$browserSessionStrategy = new Codex_Xtest_Model_Phpunit_Session_Pageobject();
+        $this->localSessionStrategy = self::$browserSessionStrategy;
+    }
+
     public function addModelDouble($modelClass, $doubleClass)
     {
         // TODO: Add Frontend Model Mocks
         $this->markTestIncomplete();
     }
+
+
 
 }
