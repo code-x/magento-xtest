@@ -3,9 +3,9 @@
 class Xtest
 {
 
-    public static function initAdmin($withCustomConfig = false)
+    public static function initAdmin()
     {
-        self::init('admin', $withCustomConfig);
+        self::init('admin');
 
         Mage::getSingleton('core/translate')->setLocale(Mage::app()->getLocale()->getLocaleCode())->init(
             'admin',
@@ -13,12 +13,12 @@ class Xtest
         );
     }
 
-    public static function initFrontend($code = null, $withCustomConfig = false)
+    public static function initFrontend($code = null)
     {
         if ($code === null) {
             $code = '';
         }
-        self::init($code, $withCustomConfig);
+        self::init($code);
 
 
         Mage::getSingleton('core/translate')->setLocale(Mage::app()->getLocale()->getLocaleCode())->init(
@@ -27,12 +27,10 @@ class Xtest
         );
     }
 
-    protected static function init($code, $withCustomConfig = false)
+    protected static function init($code)
     {
         $options = array();
-        if ($withCustomConfig) {
-            $options['config_model'] = 'Codex_Xtest_Model_Core_Config';
-        }
+        $options['config_model'] = 'Codex_Xtest_Model_Core_Config';
 
         Mage::reset();
         Mage::app($code, 'store', $options);

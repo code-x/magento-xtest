@@ -33,11 +33,11 @@
             </xtest>
         </helpers>
 
-        <xtest>
+        <xtests>
             <xtest>
                 <class>Codex_Xtest_Xtest</class>
             </xtest>
-        </xtest>
+        </xtests>
 
     </global>
 

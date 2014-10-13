@@ -10,7 +10,7 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
      */
     public function getPageObject($modelClass)
     {
-        /** @var $model Codex_Xtest_Model_Framework_Selenium_Pageobject_Abstract */
+        /** @var $model Codex_Xtest_Xtest_Pageobject_Abstract */
         $model = Xtest::getXtest($modelClass);
 
         $model->setBrowser($this->getBrowser());
@@ -27,7 +27,7 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
     {
         parent::setUp();
         $this->_screenshots = array();
-        $this->setBrowser('phantomjs');
+        $this->setBrowser('firefox'); // TODO
         $this->setBrowserUrl(Mage::getBaseUrl());
         $this->shareSession(true);
 
