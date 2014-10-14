@@ -7,18 +7,18 @@
             <fixtures>
                 <order>
 
-                    <payment_method code="debit">
-                        <!--
-                            Additional Data
-                        -->
+                    <customer_id>0</customer_id>
+
+                    <payment_method>
+                        <method>debit</method>
+                        <debit_cc_owner>Test</debit_cc_owner>
+                        <debit_iban>Test</debit_iban>
+                        <debit_swift>Test</debit_swift>
+                        <!-- some other options-->
                     </payment_method>
 
-                    <customer_id>false</customer_id>
-
-                    <shipping_method code="flatrate_flatrate">
-                        <!--
-                        Additional Data
-                        -->
+                    <shipping_method>
+                        <method>flatrate_flatrate</method>
                     </shipping_method>
 
                     <billing_address>
@@ -49,6 +49,10 @@
                             <qty>1</qty>
                         </item>
                         -->
+                        <item>
+                            <sku>test-01</sku>
+                            <qty>1</qty>
+                        </item>
                     </items>
 
                 </order>

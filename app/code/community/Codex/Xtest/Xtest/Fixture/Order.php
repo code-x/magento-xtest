@@ -1,6 +1,6 @@
 <?php
 
-class Codex_Xtest_Xtest_Fixture_Order
+class Codex_Xtest_Xtest_Fixture_Order extends Codex_Xtest_Xtest_Fixture_Abstract
 {
 
     /**
