@@ -35,13 +35,24 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         if( !$title ) {
             $title = $this->title();
         }
-
         $title .= ' using '.$this->getBrowser();
-
-        $this->resizeBrowserWindow(1024,768);
         $this->getTestCase()->addScreenshot( $title, $this->currentScreenshot() );
 
         return $this;
+    }
+
+    public function takeResponsiveScreenshots( $title = null )
+    {
+        if( !$title ) {
+            $title = $this->title();
+        }
+
+        $this->resizeBrowserWindow(450,1024);
+        $this->takeScreenshot( $title.' w450' );
+
+        $this->resizeBrowserWindow(1280,1024);
+        $this->takeScreenshot( $title.' w1280' );
+
     }
 
     public function resizeBrowserWindow($width = 1280, $height = 1024) {
