@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<config>
+
+
+    <default>
+        <xtest>
+            <fixtures>
+                <order>
+
+                    <payment_method code="debit">
+                        <!--
+                            Additional Data
+                        -->
+                    </payment_method>
+
+                    <customer_id>false</customer_id>
+
+                    <shipping_method code="flatrate_flatrate">
+                        <!--
+                        Additional Data
+                        -->
+                    </shipping_method>
+
+                    <billing_address>
+                        <firstname>Xtest Firstname</firstname>
+                        <lastname>Xtest Lastname</lastname>
+                        <street>Xtest Street</street>
+                        <city>Xtest City</city>
+                        <postcode>33100</postcode>
+                        <telephone>Xtest Phone</telephone>
+                        <country_id>DE</country_id>
+                        <region_id></region_id>
+                    </billing_address>
+
+                    <shipping_address>
+                        <firstname>Xtest Firstname</firstname>
+                        <lastname>Xtest Lastname</lastname>
+                        <street>Xtest Street</street>
+                        <city>Xtest City</city>
+                        <postcode>33100</postcode>
+                        <telephone>Xtest Phone</telephone>
+                        <country_id>DE</country_id>
+                        <region_id></region_id>
+                    </shipping_address>
+
+                    <items>
+                        <!--
+                        <item sku="1234">
+                            <qty>1</qty>
+                        </item>
+                        -->
+                    </items>
+
+                </order>
+            </fixtures>
+        </xtest>
+    </default>
+</config>

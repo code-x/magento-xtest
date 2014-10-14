@@ -7,14 +7,9 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
      */
     protected $_transaction;
 
-    public function getMageConfig()
-    {
-        return Xtest::getConfig();
-    }
-
     public function addModelMock($modelClass, $mockClassObj)
     {
-        $this->getMageConfig()->addModelMock($modelClass, $mockClassObj);
+        Xtest::getConfig()->addModelMock($modelClass, $mockClassObj);
     }
 
     public function getModelMock(
