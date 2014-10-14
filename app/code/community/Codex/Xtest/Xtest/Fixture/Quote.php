@@ -38,7 +38,7 @@ class Codex_Xtest_Xtest_Fixture_Quote
 
         $quote->getShippingAddress()
             ->setCollectShippingRates(true)
-            ->setShippingMethod('api_api')
+            ->setShippingMethod('flatrate_flatrate')
             ->setPaymentMethod('debit');
 
         $quote->getPayment()->importData(

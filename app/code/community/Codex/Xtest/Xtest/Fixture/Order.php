@@ -8,8 +8,9 @@ class Codex_Xtest_Xtest_Fixture_Order
      */
     public function getTest()
     {
-        $quote = Mage::getModel('xtest/framework_fixture_quote');
-        return $this->convertQuoteToOrder($quote);
+        /** @var $quote Codex_Xtest_Xtest_Fixture_Quote */
+        $quote = Xtest::getXtest('xtest/fixture_quote');
+        return $this->convertQuoteToOrder($quote->getTest());
     }
 
     /**
@@ -18,9 +19,9 @@ class Codex_Xtest_Xtest_Fixture_Order
      */
     public function convertQuoteToOrder( $quote )
     {
+        /* @var $service Mage_Sales_Model_Service_Quote */
         $service = Mage::getModel('sales/service_quote', $quote);
         $service->submitAll();
-        /* @var $service Mage_Sales_Model_Service_Quote */
 
         return $service->getOrder();
     }
