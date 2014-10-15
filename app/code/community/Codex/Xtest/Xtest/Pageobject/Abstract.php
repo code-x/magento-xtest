@@ -59,14 +59,25 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         $this->prepareSession()->currentWindow()->size(array('width' => $width, 'height' => $height));
     }
 
-    public function assertElementIsVisible( $cssSelector )
+    public function assertElementIsVisible( \PHPUnit_Extensions_Selenium2TestCase_Element $element, $msg = 'Element is not visible, but should be'  )
     {
-        $this->assertTrue( $this->byCssSelector( $cssSelector )->displayed(), "$cssSelector is not visible" );
+        $this->assertTrue( $element->displayed(), $msg );
+
     }
 
-    public function assertElementIsNotVisible( $cssSelector )
+    public function assertElementIsNotVisible( \PHPUnit_Extensions_Selenium2TestCase_Element $element, $msg = "Element is not visible, but should be" )
     {
-        $this->assertFalse( $this->byCssSelector( $cssSelector )->displayed(), "$cssSelector is not visible" );
+        $this->assertFalse( $element->displayed(), $msg );
+    }
+
+    public function assertElementIsVisibleInViewport( \PHPUnit_Extensions_Selenium2TestCase_Element $element, $msg = "Element is not visible in viewport, but should be" )
+    {
+        $this->markTestIncomplete('not implemented');
+    }
+
+    public function assertElementIsNotVisibleInViewport( \PHPUnit_Extensions_Selenium2TestCase_Element $element, $msg = "Element is visible in viewport, but should not" )
+    {
+        $this->markTestIncomplete('not implemented');
     }
 
 }
