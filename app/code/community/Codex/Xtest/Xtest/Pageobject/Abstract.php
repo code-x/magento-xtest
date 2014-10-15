@@ -59,4 +59,14 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         $this->prepareSession()->currentWindow()->size(array('width' => $width, 'height' => $height));
     }
 
+    public function assertElementIsVisible( $cssSelector )
+    {
+        $this->assertTrue( $this->byCssSelector( $cssSelector )->displayed(), "$cssSelector is not visible" );
+    }
+
+    public function assertElementIsNotVisible( $cssSelector )
+    {
+        $this->assertFalse( $this->byCssSelector( $cssSelector )->displayed(), "$cssSelector is not visible" );
+    }
+
 }
