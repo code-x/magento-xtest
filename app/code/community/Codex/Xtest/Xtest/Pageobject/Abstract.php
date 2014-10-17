@@ -105,7 +105,7 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         if( !$element->displayed() ) {
             return false;
         }
-        $this->markTestIncomplete('not implemented');
+        $this->markTestIncomplete('not implemented'); // TODO: Noch berechnen!
         return true;
     }
 
