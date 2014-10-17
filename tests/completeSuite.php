@@ -94,12 +94,15 @@ class completeSuite  {
      */
     public static function suite() {
 
+        $tmpSuite = new PHPUnit_Framework_TestSuite();;
+
         $testSuiteLocal = self::createSuiteFromPath( Mage::getConfig()->getOptions()->getCodeDir().DS.'local' );
-        // $testSuiteCommunity = self::createSuiteFromPath( Mage::getConfig()->getOptions()->getCodeDir().DS.'community' );
+        $testSuiteCommunity = self::createSuiteFromPath( Mage::getConfig()->getOptions()->getCodeDir().DS.'community' );
 
-        //var_Dump( count($testSuiteLocal) );
+        $tmpSuite->addTestSuite( $testSuiteLocal );
+        $tmpSuite->addTestSuite( $testSuiteCommunity );
 
-        return $testSuiteLocal;
+        return $tmpSuite;
     }
 }
 
