@@ -80,4 +80,25 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         $this->markTestIncomplete('not implemented');
     }
 
+    public function findElementsByCssSelector( $selector, $root_element = null )
+    {
+        if( !$root_element )
+        {
+            $root_element = $this;
+        }
+        return $root_element->elements( $this->using('css selector')->value( $selector ) );
+    }
+
+    public function assertElementHasClass( $class, $element )
+    {
+        $classes = explode(' ', $element->attribute('class') );
+        $this->assertContains($class, $classes);
+    }
+
+    public function getSeleniumConfig($path)
+    {
+        return $this->getTestCase()->getSeleniumConfig($path);
+    }
+
+
 }

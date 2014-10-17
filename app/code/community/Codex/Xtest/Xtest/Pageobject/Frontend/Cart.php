@@ -5,7 +5,7 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Cart extends Codex_Xtest_Xtest_Pageo
 
     public function open()
     {
-        $this->open( Mage::getBaseUrl('checkout/cart') );
+        $this->url( Mage::getUrl('checkout/cart') );
     }
 
     public function getShoppingCartTable()
@@ -27,7 +27,8 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Cart extends Codex_Xtest_Xtest_Pageo
     {
         $result = array();
 
-        $trList = $this->getShoppingCartTable()->elements('tr');
+        $cartTable = $this->getShoppingCartTable();
+        $trList = $this->findElementsByCssSelector( 'tr', $cartTable );
         foreach( $trList AS $tr )
         {
             /** @var PHPUnit_Extensions_Selenium2TestCase_Element $tr */
@@ -39,11 +40,13 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Cart extends Codex_Xtest_Xtest_Pageo
                     'product_price' => $tr->byCssSelector('.product-cart-price .price')->text(),
                     'row_total' => $tr->byCssSelector('.product-cart-total .price')->text(),
                     'name' => $tr->byCssSelector('.product-name'),
-                    'qty' => $tr->byName('cart['.$item_id.'][qty]')->value(),
+                    //'qty' => $tr->byName('cart['.$item_id.'][qty]')->value(), // TODO
                 );
             }
 
         }
+
+        return $result;
     }
 
     public function setQty( $item_id, $qty )
@@ -54,7 +57,7 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Cart extends Codex_Xtest_Xtest_Pageo
 
     public function getGrandTotal()
     {
-        $prices = $this->byId('.shopping-cart-totals-table td .price');
+        $prices = $this->byCssSelector('.shopping-cart-totals-table td .price');
         $grand_total = end( $prices ); // Last Element is Grand-Total
         return $grand_total->text();
     }
@@ -87,11 +90,11 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Cart extends Codex_Xtest_Xtest_Pageo
      */
     protected function getItemId( PHPUnit_Extensions_Selenium2TestCase_Element $tr )
     {
-        $aList = $tr->elements( 'a' );
+        $aList = $this->findElementsByCssSelector('a', $tr);
         foreach( $aList AS $a )
         {
             /** @var PHPUnit_Extensions_Selenium2TestCase_Element $a */
-            if( preg_match('#checkout/cart/delete/id/([0-9]*)#siU', $a->attribute('href'), $matches ) ) {
+            if( preg_match('#checkout/cart/delete/id/([0-9]*)/#siU', $a->attribute('href'), $matches ) ) {
                 return $matches[1];
             }
         }

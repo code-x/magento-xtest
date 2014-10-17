@@ -25,6 +25,8 @@ class Xtest
             'frontend',
             true
         );
+
+        Mage::register('isSecureArea', true, true);
     }
 
     protected static function init($code)
