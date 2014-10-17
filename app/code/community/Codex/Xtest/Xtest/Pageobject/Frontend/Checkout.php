@@ -51,20 +51,76 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Checkout extends Codex_Xtest_Xtest_P
 
     }
 
+    public function setShippingMethod( $data = null )
+    {
+        if( $data === null )
+        {
+            $data = $this->getSeleniumConfig('checkout/shipping_method');
+        }
+
+        $this->getActiveStepElement()->byId('s_method_'.$data['method'])->click();
+    }
+
+    public function setPaymentMethod( $data = null )
+    {
+        if( $data === null )
+        {
+            $data = $this->getSeleniumConfig('checkout/payment_method');
+        }
+
+        $this->getActiveStepElement()->byId('p_method_'.$data['method'])->click();
+        unset( $data['method'] );
+
+        foreach( $data AS $key => $value )
+        {
+            try {
+                if( $element = $this->byId($key) ) {
+                    $element->value( $value );
+                }
+            } catch ( \PHPUnit_Extensions_Selenium2TestCase_WebDriverException $e ) {
+                // Do nothing here
+            }
+        }
+    }
+
+    public function acceptAgreements()
+    {
+        $activeStepElement = $this->getActiveStepElement();
+        $checkboxes = $this->findElementsByCssSelector('input[type=checkbox]', $activeStepElement);
+        foreach( $checkboxes AS $checkbox )
+        {
+            $checkbox->click();
+        }
+    }
+
+    public function assertIsSuccessPage()
+    {
+        $this->assertContains('onepage/success', $this->url() );
+    }
+
+    public function getActiveStepElement()
+    {
+        return $this->byId('opc-'.$this->getActiveStepName() );
+    }
+
     public function nextStep()
     {
         $activeStepName = $this->getActiveStepName();
+        $currentLocation = (string)$this->url();
 
-        $activeStepElement = $this->byId('opc-'.$activeStepName);
+        $this->getActiveStepElement()->byCssSelector('.buttons-set button')->click();
 
-        $activeStepElement->byCssSelector('.buttons-set button')->click();
-
-        $this->waitUntil(function ( ) use ( $activeStepName ) {
-            if ( $this->getActiveStepName() != $activeStepName ) {
+        $this->waitUntil(function ( ) use ( $activeStepName, $currentLocation ) {
+            try {
+            if ( $this->getActiveStepName() != $activeStepName ||
+                (string)$this->url() != $currentLocation ) {
+                return true;
+            }
+            } catch( Exception $e ) {
                 return true;
             }
             return null;
-        }, 5000);
+        }, 60000);
     }
 
 }

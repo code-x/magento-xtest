@@ -80,7 +80,12 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         $this->markTestIncomplete('not implemented');
     }
 
-    public function findElementsByCssSelector( $selector, $root_element = null )
+    /**
+     * @param $selector
+     * @param PHPUnit_Extensions_Selenium2TestCase_Element $root_element
+     * @return \PHPUnit_Extensions_Selenium2TestCase_Element[]
+     */
+    public function findElementsByCssSelector( $selector, \PHPUnit_Extensions_Selenium2TestCase_Element $root_element = null )
     {
         if( !$root_element )
         {
@@ -89,7 +94,7 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         return $root_element->elements( $this->using('css selector')->value( $selector ) );
     }
 
-    public function assertElementHasClass( $class, $element )
+    public function assertElementHasClass( $class, \PHPUnit_Extensions_Selenium2TestCase_Element $element )
     {
         $classes = explode(' ', $element->attribute('class') );
         $this->assertContains($class, $classes);
