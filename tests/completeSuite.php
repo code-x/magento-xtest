@@ -33,7 +33,11 @@ class completeSuite  {
                 $paths[] = $pathName;
             } elseif ($fileInfo->isFile()) {
                 if ((substr(strtolower($fileName), -12) == 'testcase.php') || (substr(strtolower($fileName), -8) == 'test.php')) {
-                    $files[] = $pathName;
+
+                    if( stripos( file_get_contents($path), 'ecomdev' ) === false ) {
+                        // do not add ecomdev phpunit
+                        $files[] = $pathName;
+                    }
                 } elseif ((substr(strtolower($fileName), -4) == '.php')) {
                     if (strpos(strtolower($fileName), 'bootstrap') === false && strpos(strtolower($fileName), 'abstract') === false) {
                         // echo "WARNING: Found php file that is not a test file: $fileName\n";
