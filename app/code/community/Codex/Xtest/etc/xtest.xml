@@ -5,6 +5,13 @@
     <default>
         <xtest>
             <fixtures>
+
+                <customer>
+                    <email>devnull@code-x.de</email>
+                    <firstname>Test Vorname</firstname>
+                    <lastname>Test Nachname</lastname>
+                </customer>
+
                 <order>
 
                     <customer_id>0</customer_id>
