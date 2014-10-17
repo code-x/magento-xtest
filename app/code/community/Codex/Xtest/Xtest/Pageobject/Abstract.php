@@ -10,6 +10,9 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         parent::__construct($name, $data, $dataName);
     }
 
+    /**
+     * @param $params
+     */
     protected function setUpSessionStrategy($params)
     {
         self::$browserSessionStrategy = new Codex_Xtest_Model_Phpunit_Session_Pageobject();
@@ -24,23 +27,35 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         return $this->testCase;
     }
 
+    /**
+     * @param Codex_Xtest_Xtest_Selenium_TestCase $case
+     * @return $this
+     */
     public function setTestCase( Codex_Xtest_Xtest_Selenium_TestCase $case )
     {
         $this->testCase = $case;
         return $this;
     }
 
+    /**
+     * @param null $title
+     * @return $this
+     */
     public function takeScreenshot( $title = null )
     {
         if( !$title ) {
             $title = $this->title();
         }
+
         $title .= ' using '.$this->getBrowser();
         $this->getTestCase()->addScreenshot( $title, $this->currentScreenshot() );
 
         return $this;
     }
 
+    /**
+     * @param null $title
+     */
     public function takeResponsiveScreenshots( $title = null )
     {
         if( !$title ) {
@@ -55,6 +70,10 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
 
     }
 
+    /**
+     * @param int $width
+     * @param int $height
+     */
     public function resizeBrowserWindow($width = 1280, $height = 1024) {
         $this->prepareSession()->currentWindow()->size(array('width' => $width, 'height' => $height));
     }
@@ -123,12 +142,20 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         return $root_element->elements( $this->using('css selector')->value( $selector ) );
     }
 
+    /**
+     * @param $class
+     * @param PHPUnit_Extensions_Selenium2TestCase_Element $element
+     */
     public function assertElementHasClass( $class, \PHPUnit_Extensions_Selenium2TestCase_Element $element )
     {
         $classes = explode(' ', $element->attribute('class') );
         $this->assertContains($class, $classes);
     }
 
+    /**
+     * @param $path
+     * @return mixed
+     */
     public function getSeleniumConfig($path)
     {
         return $this->getTestCase()->getSeleniumConfig($path);
