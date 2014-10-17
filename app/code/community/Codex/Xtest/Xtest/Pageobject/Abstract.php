@@ -59,25 +59,54 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         $this->prepareSession()->currentWindow()->size(array('width' => $width, 'height' => $height));
     }
 
+    /**
+     * @param PHPUnit_Extensions_Selenium2TestCase_Element $element
+     * @param string $msg
+     */
     public function assertElementIsVisible( \PHPUnit_Extensions_Selenium2TestCase_Element $element, $msg = 'Element is not visible, but should be'  )
     {
         $this->assertTrue( $element->displayed(), $msg );
 
     }
 
+    /**
+     * @param PHPUnit_Extensions_Selenium2TestCase_Element $element
+     * @param string $msg
+     */
     public function assertElementIsNotVisible( \PHPUnit_Extensions_Selenium2TestCase_Element $element, $msg = "Element is not visible, but should be" )
     {
         $this->assertFalse( $element->displayed(), $msg );
     }
 
+    /**
+     * @param PHPUnit_Extensions_Selenium2TestCase_Element $element
+     * @param string $msg
+     */
     public function assertElementIsVisibleInViewport( \PHPUnit_Extensions_Selenium2TestCase_Element $element, $msg = "Element is not visible in viewport, but should be" )
     {
-        $this->markTestIncomplete('not implemented');
+        $this->assertTrue( $this->isVisibleInViewport( $element ) );
     }
 
+    /**
+     * @param PHPUnit_Extensions_Selenium2TestCase_Element $element
+     * @param string $msg
+     */
     public function assertElementIsNotVisibleInViewport( \PHPUnit_Extensions_Selenium2TestCase_Element $element, $msg = "Element is visible in viewport, but should not" )
     {
+        $this->assertFalse( $this->isVisibleInViewport( $element ) );
+    }
+
+    /**
+     * @param PHPUnit_Extensions_Selenium2TestCase_Element $element
+     * @return bool
+     */
+    public function isVisibleInViewport( \PHPUnit_Extensions_Selenium2TestCase_Element $element )
+    {
+        if( !$element->displayed() ) {
+            return false;
+        }
         $this->markTestIncomplete('not implemented');
+        return true;
     }
 
     /**
