@@ -41,11 +41,16 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
     {
         $db = Mage::getSingleton('core/resource')->getConnection('core_write');
         $db->beginTransaction();
+
         parent::setUp();
     }
 
     protected function tearDown()
     {
+        /** @var $mailqueue Codex_Xtest_Xtest_Helper_Mailqueue */
+        $mailqueue = Xtest::getXtest('xtest/helper_mailqueue');
+        $mailqueue->reset();
+
         parent::tearDown();
         $db = Mage::getSingleton('core/resource')->getConnection('core_write');
         $db->rollBack();
