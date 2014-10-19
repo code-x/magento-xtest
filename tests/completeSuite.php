@@ -34,7 +34,7 @@ class completeSuite  {
             } elseif ($fileInfo->isFile()) {
                 if ((substr(strtolower($fileName), -12) == 'testcase.php') || (substr(strtolower($fileName), -8) == 'test.php')) {
 
-                    if( stripos( file_get_contents($path), 'ecomdev' ) === false ) {
+                    if( stripos( file_get_contents($pathName), 'ecomdev' ) === false ) {
                         // do not add ecomdev phpunit
                         $files[] = $pathName;
                     }
