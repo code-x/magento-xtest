@@ -22,13 +22,13 @@ class Xtest
         }
         self::init($code);
 
+        Mage::register('isSecureArea', true, true);
+        Mage::app()->loadArea( Mage_Core_Model_App_Area::AREA_FRONTEND );
+
         Mage::getSingleton('core/translate')->setLocale(Mage::app()->getLocale()->getLocaleCode())->init(
             'frontend',
             true
         );
-
-        Mage::register('isSecureArea', true, true);
-        Mage::app()->loadArea( Mage_Core_Model_App_Area::AREA_FRONTEND );
     }
 
     protected static function init($code)
