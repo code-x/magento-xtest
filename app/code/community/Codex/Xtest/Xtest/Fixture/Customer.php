@@ -11,21 +11,25 @@ class Codex_Xtest_Xtest_Fixture_Customer extends Codex_Xtest_Xtest_Fixture_Abstr
      */
     public function getTest($cleanup = true)
     {
+        $customer = Mage::getModel('customer/customer');
+        $customer->setStore(current(Mage::app()->getStores())); // TODO: Warum ist das nicht automatisch der richtige?
+
         $customerConfig = $this->getConfigFixture('customer');
         $this->_email = $customerConfig['email'];
+
+        $this->_password = $customer->generatePassword();
 
         if ($cleanup) {
             // Testkunde löschen, dann neuen anlegen
             $customerCol = Mage::getModel('customer/customer')->getCollection();
             $customerCol->addFieldToFilter('email', $this->getEmail());
             $customerCol->walk('delete');
+        } else {
+            $customer->loadByEmail( $this->_email );
         }
 
         // Neuen Testkunden erstellen
-        $customer = Mage::getModel('customer/customer');
         $customer->setData($customerConfig);
-        $this->_password = $customer->generatePassword();
-        $customer->setStore(current(Mage::app()->getStores())); // TODO: Warum ist das nicht automatisch der richtige?
         $customer->setPassword($this->getPassword());
         $customer->validate();
         $customer->save();
