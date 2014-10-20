@@ -40,6 +40,7 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $db = Mage::getSingleton('core/resource')->getConnection('core_write');
+        $db->query('SET autocommit=0;');
         $db->beginTransaction();
 
         parent::setUp();
