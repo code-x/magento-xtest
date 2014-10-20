@@ -38,10 +38,6 @@ class completeSuite  {
                         // do not add ecomdev phpunit
                         $files[] = $pathName;
                     }
-                } elseif ((substr(strtolower($fileName), -4) == '.php')) {
-                    if (strpos(strtolower($fileName), 'bootstrap') === false && strpos(strtolower($fileName), 'abstract') === false) {
-                        // echo "WARNING: Found php file that is not a test file: $fileName\n";
-                    }
                 }
             }
         }
