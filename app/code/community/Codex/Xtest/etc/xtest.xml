@@ -10,6 +10,29 @@
                     <email>devnull@code-x.de</email>
                     <firstname>Test Vorname</firstname>
                     <lastname>Test Nachname</lastname>
+
+                    <billing_address>
+                        <firstname>Xtest Firstname</firstname>
+                        <lastname>Xtest Lastname</lastname>
+                        <street>Xtest Street</street>
+                        <city>Xtest City</city>
+                        <postcode>33100</postcode>
+                        <telephone>Xtest Phone</telephone>
+                        <country_id>DE</country_id>
+                        <region_id></region_id>
+                    </billing_address>
+
+                    <shipping_address>
+                        <firstname>Xtest Firstname</firstname>
+                        <lastname>Xtest Lastname</lastname>
+                        <street>Xtest Street</street>
+                        <city>Xtest City</city>
+                        <postcode>33100</postcode>
+                        <telephone>Xtest Phone</telephone>
+                        <country_id>DE</country_id>
+                        <region_id></region_id>
+                    </shipping_address>
+
                 </customer>
 
                 <order>

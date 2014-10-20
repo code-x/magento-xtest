@@ -34,6 +34,21 @@ class Codex_Xtest_Xtest_Fixture_Customer extends Codex_Xtest_Xtest_Fixture_Abstr
         $customer->validate();
         $customer->save();
 
+        $address = Mage::getModel('customer/address');
+        $address->addData( $customer['billing_address'] );
+        $address->setIsDefaultBilling('1');
+        $address->setCustomerId( $customer->getId() );
+        $address->save();
+        $customer->addAddress( $address );
+
+        $address = Mage::getModel('customer/address');
+        $address->addData( $customer['shipping_address'] );
+        $address->setIsDefaultShipping('1');
+        $address->setCustomerId( $customer->getId() );
+        $address->save();
+        $customer->addAddress( $address );
+
+
         return $customer;
     }
 
