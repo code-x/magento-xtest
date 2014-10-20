@@ -33,6 +33,8 @@ class Codex_Xtest_Xtest_Fixture_Customer extends Codex_Xtest_Xtest_Fixture_Abstr
         $customer->setPassword($this->getPassword());
         $customer->validate();
         $customer->save();
+
+        return $customer;
     }
 
     /**
