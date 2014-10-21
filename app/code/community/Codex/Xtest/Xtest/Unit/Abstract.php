@@ -16,6 +16,15 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         Xtest::getConfig()->addModelMock($modelClass, $mockClassObj);
     }
 
+    public function addHelpeMock($helperName, $mockClassObj)
+    {
+        $key = '_helper/' . $helperName;
+        if (Mage::registry($key)) {
+            Mage::unregister($key);
+        }
+        Xtest::getConfig()->addHelperMock($helperName, $mockClassObj);
+    }
+
     public function getModelMock(
         $originalClassName,
         $methods = array(),
@@ -40,6 +49,29 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function getHelperMock(
+        $originalClassName,
+        $methods = array(),
+        array $arguments = array(),
+        $mockClassName = '',
+        $callOriginalConstructor = true,
+        $callOriginalClone = true,
+        $callAutoload = true,
+        $cloneArguments = false,
+        $callOriginalMethods = false
+    ) {
+        return $this->getMock(
+            Mage::getConfig()->getHelperClassName($originalClassName),
+            $methods,
+            $arguments,
+            $mockClassName,
+            $callOriginalConstructor,
+            $callOriginalClone,
+            $callAutoload,
+            $cloneArguments,
+            $callOriginalMethods
+        );
+    }
 
     protected function setUp()
     {

@@ -3,15 +3,39 @@
 class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
 {
     protected $modelMocks = array();
+    protected $helperMocks = array();
 
     public function addModelMock($modelClass, $mockClassObj)
     {
         $this->modelMocks[$modelClass] = $mockClassObj;
     }
 
+    public function addHelperMock($helperName, $mockClassObj)
+    {
+        if (strpos($helperName, '/') === false) {
+            $helperName .= '/data';
+        }
+
+        $this->helperMocks[$helperName] = $mockClassObj;
+    }
+
     public function resetMocks()
     {
         $this->modelMocks = array();
+        $this->helperMocks = array();
+    }
+
+    public function getHelperClassName($helperName)
+    {
+        if (strpos($helperName, '/') === false) {
+            $helperName .= '/data';
+        }
+
+        if ($classObj = $this->helperMocks[$helperName]) {
+            return get_class($classObj);
+        }
+
+        return $this->getGroupedClassName('helper', $helperName);
     }
 
     public function getModelInstance($modelClass = '', $constructArguments = array())
