@@ -34,9 +34,11 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
 
         // Reset registry
         foreach ($this->helperMocks as $helperName) {
-            $registryKey = '_helper/' . $helperName;
-            if (Mage::registry($registryKey)) {
-                Mage::unregister($registryKey);
+            $this->unregisterHelper($helperName);
+
+            // For helpers without /data
+            if (strpos($helperName, '/') === false) {
+                $this->unregisterHelper($helperName . '/data');
             }
         }
 
@@ -90,9 +92,15 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
     protected function registerHelper($helperName, $mockClassObj)
     {
         $registryKey = '_helper/' . $helperName;
+        $this->unregisterHelper($helperName);
+        Mage::register($registryKey, $mockClassObj);
+    }
+
+    protected function unregisterHelper($helperName)
+    {
+        $registryKey = '_helper/' . $helperName;
         if (Mage::registry($registryKey)) {
             Mage::unregister($registryKey);
         }
-        Mage::register($registryKey, $mockClassObj);
     }
 }
