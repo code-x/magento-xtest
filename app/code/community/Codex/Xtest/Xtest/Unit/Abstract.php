@@ -9,6 +9,10 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
 
     public function addModelMock($modelClass, $mockClassObj)
     {
+        $key = '_singleton/' . $modelClass;
+        if (Mage::registry($key)) {
+            Mage::unregister($key);
+        }
         Xtest::getConfig()->addModelMock($modelClass, $mockClassObj);
     }
 
