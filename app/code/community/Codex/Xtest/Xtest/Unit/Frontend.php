@@ -21,9 +21,7 @@ class Codex_Xtest_Xtest_Unit_Frontend extends Codex_Xtest_Xtest_Unit_Abstract
         }
         sort($allowedMethods);
         sort($availableMethods);
-
-        $arraysEqual = ($allowedMethods == $availableMethods);
-        $this->assertEquals(true, $arraysEqual);
+        $this->assertEquals($allowedMethods, $availableMethods);
     }
 
 }
