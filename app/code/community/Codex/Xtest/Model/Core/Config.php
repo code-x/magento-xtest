@@ -7,35 +7,40 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
 
     public function addModelMock($modelClass, $mockClassObj)
     {
+        $key = '_singleton/' . $modelClass;
+        if (Mage::registry($key)) {
+            Mage::unregister($key);
+        }
+
         $this->modelMocks[$modelClass] = $mockClassObj;
     }
 
     public function addHelperMock($helperName, $mockClassObj)
     {
+        $this->registerHelper($helperName, $mockClassObj);
+
+        // For helpers without /data
         if (strpos($helperName, '/') === false) {
-            $helperName .= '/data';
+            $this->registerHelper($helperName . '/data', $mockClassObj);
         }
 
-        $this->helperMocks[$helperName] = $mockClassObj;
+        // Remember helperMock for
+        $this->helperMocks[] = $helperName;
     }
 
     public function resetMocks()
     {
         $this->modelMocks = array();
+
+        // Reset registry
+        foreach ($this->helperMocks as $helperName) {
+            $registryKey = '_helper/' . $helperName;
+            if (Mage::registry($registryKey)) {
+                Mage::unregister($registryKey);
+            }
+        }
+
         $this->helperMocks = array();
-    }
-
-    public function getHelperClassName($helperName)
-    {
-        if (strpos($helperName, '/') === false) {
-            $helperName .= '/data';
-        }
-
-        if ($classObj = $this->helperMocks[$helperName]) {
-            return get_class($classObj);
-        }
-
-        return $this->getGroupedClassName('helper', $helperName);
     }
 
     public function getModelInstance($modelClass = '', $constructArguments = array())
@@ -82,4 +87,12 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
         return $res;
     }
 
+    protected function registerHelper($helperName, $mockClassObj)
+    {
+        $registryKey = '_helper/' . $helperName;
+        if (Mage::registry($registryKey)) {
+            Mage::unregister($registryKey);
+        }
+        Mage::register($registryKey, $mockClassObj);
+    }
 }

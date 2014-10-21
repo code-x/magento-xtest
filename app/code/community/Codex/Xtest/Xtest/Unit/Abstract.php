@@ -9,20 +9,18 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
 
     public function addModelMock($modelClass, $mockClassObj)
     {
-        $key = '_singleton/' . $modelClass;
-        if (Mage::registry($key)) {
-            Mage::unregister($key);
-        }
         Xtest::getConfig()->addModelMock($modelClass, $mockClassObj);
+        $this->assertEquals($mockClassObj, Mage::getModel($modelClass));
     }
 
-    public function addHelpeMock($helperName, $mockClassObj)
+    public function addHelperMock($helperName, $mockClassObj)
     {
-        $key = '_helper/' . $helperName;
-        if (Mage::registry($key)) {
-            Mage::unregister($key);
-        }
         Xtest::getConfig()->addHelperMock($helperName, $mockClassObj);
+        $this->assertEquals($mockClassObj, Mage::helper($helperName));
+
+        if (strpos($helperName, '/') === false) {
+            $this->assertEquals($mockClassObj, Mage::helper($helperName . '/data'));
+        }
     }
 
     public function getModelMock(
