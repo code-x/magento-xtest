@@ -11,7 +11,7 @@ class Codex_Xtest_Xtest_Unit_Frontend extends Codex_Xtest_Xtest_Unit_Abstract
     public function assertPaymentMethodsAvailable( Mage_Sales_Model_Quote $quote, Array $allowedMethods )
     {
         $availableMethods = array();
-        $allActivePaymentMethods = Mage::getModel('payment/config')->getActiveMethods();
+        $allActivePaymentMethods = Mage::getModel('payment/config')->getAllMethods();
         foreach( $allActivePaymentMethods AS $paymentMethod )
         {
             /** @var $paymentMethod Mage_Payment_Model_Method_Abstract */
