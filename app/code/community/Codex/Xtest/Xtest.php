@@ -53,4 +53,24 @@ class Xtest
         return self::getConfig()->getXtestInstance($modelClass, $arguments);
     }
 
+    /**
+     * @param $model string model syntax or class name (codex_module/observer or Codex_Module_Model_Observer)
+     * @param $method string the exact method name (as defined in confix.xml)
+     * @param $eventName string the original name of the event
+     * @param array $args array
+     */
+    public static function dispatchEvent($model, $method, $eventName, array $args = array())
+    {
+        $event = new Varien_Event($args);
+        $event->setName($eventName);
+
+        $observer = new Varien_Event_Observer();
+        $observer->setData(array('event' => $event));
+        $observer->addData($args);
+
+        $object = Mage::getModel($model);
+        if (method_exists($object, $method)) {
+            $object->$method($observer);
+        }
+    }
 }
