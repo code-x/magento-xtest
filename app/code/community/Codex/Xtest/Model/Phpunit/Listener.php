@@ -102,8 +102,9 @@ class Codex_Xtest_Model_Phpunit_Listener implements PHPUnit_Framework_TestListen
 
         if (method_exists($test, 'getScreenshots')) {
             foreach ($test->getScreenshots() AS $i => $item) {
-                file_put_contents($this->dir . DS . $i . '.png', $item[1]);
-                $result['screenshots'][$i] = $item[0];
+                $key = md5($testName.$i);
+                file_put_contents($this->dir . DS . $key . '.png', $item[1]);
+                $result['screenshots'][$key] = $item[0];
             }
         }
 
