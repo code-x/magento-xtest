@@ -1,7 +1,7 @@
 Xtest
 =====
 
-Simple Magento Testing Framework
+Simple Magento Testing Framework - still working on it. Do not use :-)
 
 ## Unit-Test
 
