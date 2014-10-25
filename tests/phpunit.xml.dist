@@ -1,0 +1,17 @@
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/3.7/phpunit.xsd"
+        bootstrap="../app/code/community/Codex/Xtest/bootstrap.php"
+
+        colors="true"
+
+
+        >
+
+    <listeners>
+
+        <listener class="Codex_Xtest_Model_Phpunit_Listener"/>
+
+    </listeners>
+
+</phpunit>

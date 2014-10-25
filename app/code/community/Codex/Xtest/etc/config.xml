@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Codex_Xtest>
+            <version>0.0.1</version>
+        </Codex_Xtest>
+    </modules>
+
+    <global>
+
+        <models>
+
+            <core>
+                <rewrite>
+                    <resource>Codex_Xtest_Model_Core_Resource</resource>
+                </rewrite>
+            </core>
+
+            <xtest>
+                <class>Codex_Xtest_Model</class>
+            </xtest>
+        </models>
+
+        <blocks>
+            <xtest>
+                <class>Codex_Xtest_Block</class>
+            </xtest>
+        </blocks>
+
+        <helpers>
+            <xtest>
+                <class>Codex_Xtest_Helper</class>
+            </xtest>
+        </helpers>
+
+        <xtests>
+            <xtest>
+                <class>Codex_Xtest_Xtest</class>
+            </xtest>
+        </xtests>
+
+    </global>
+
+</config>
