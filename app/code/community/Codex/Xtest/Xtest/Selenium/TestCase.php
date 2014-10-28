@@ -87,7 +87,9 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
 
     public static function tearDownAfterClass()
     {
-        self::prepareSession()->closeWindow();
+        if( self::$browserSessionStrategy) {
+            self::$browserSessionStrategy->reset();
+        }
         parent::tearDownAfterClass();
     }
 
