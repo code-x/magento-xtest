@@ -162,4 +162,36 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
     }
 
 
+    public function byLinkText( $text, $exactOnly = false )
+    {
+        try {
+            return parent::byLinkText($text);
+        } catch ( Exception $e ) {
+
+            try {
+                return parent::byLinkText(strtoupper($text));
+
+            } catch ( Exception $e ) {
+
+                $aTags = $this->findElementsByCssSelector('a');
+                foreach( $aTags AS $aTag)
+                {
+                    $aText = $aTag->text();
+
+                    if( strtolower( $aText ) ==  strtolower($text) )
+                    {
+                        return $aTag;
+                    }
+
+                    if( stripos( $aText, $text ) !== false ) {
+                        return $aTag;
+                    }
+
+                }
+
+            }
+            throw $e;
+        }
+    }
+
 }
