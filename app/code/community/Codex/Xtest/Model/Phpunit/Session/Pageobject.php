@@ -95,7 +95,7 @@ class Codex_Xtest_Model_Phpunit_Session_Pageobject
     public function reset()
     {
         if( self::$session ) {
-            self::$session->quit();
+            self::$session->stop();
         }
         self::$session=null;
         self::$mainWindow=null;
