@@ -11,8 +11,11 @@ class Codex_Xtest_Xtest_Fixture_Customer extends Codex_Xtest_Xtest_Fixture_Abstr
      */
     public function getTest($cleanup = true)
     {
+        /** @var $store Mage_Core_Model_Store */
+        $store = current(Mage::app()->getStores() );
+
+        /** @var Mage_Customer_Model_Customer $customer */
         $customer = Mage::getModel('customer/customer');
-        $customer->setStore(current(Mage::app()->getStores())); // TODO: Warum ist das nicht automatisch der richtige?
 
         $customerConfig = $this->getConfigFixture('customer');
         $this->_email = $customerConfig['email'];
@@ -30,6 +33,8 @@ class Codex_Xtest_Xtest_Fixture_Customer extends Codex_Xtest_Xtest_Fixture_Abstr
 
         // Neuen Testkunden erstellen
         $customer->setData($customerConfig);
+        $customer->setStore( $store );
+
         $customer->setPassword($this->getPassword());
         $customer->validate();
         $customer->save();
