@@ -57,6 +57,7 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
         self::$browserSessionStrategy = new Codex_Xtest_Model_Phpunit_Session_Pageobject();
 
         if( $this->_resetSession ) {
+            self::prepareSession()->closeWindow();
             self::$browserSessionStrategy->reset();
         }
 
@@ -84,5 +85,12 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
     {
         $this->_resetSession = false;
     }
+
+    public static function tearDownAfterClass()
+    {
+        self::prepareSession()->closeWindow();
+        parent::tearDownAfterClass();
+    }
+
 
 }

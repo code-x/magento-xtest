@@ -199,10 +199,7 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         }
     }
 
-    function __destruct()
-    {
-        $this->prepareSession()->closeWindow();
-    }
+
 
 
 }
