@@ -40,4 +40,11 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Customer extends Codex_Xtest_Xtest_P
         return $this->getLoginForm()->byId('send2');
     }
 
+    public function getSuccessMessage()
+    {
+        return $this->byCssSelector('li.success-msg')->text();
+    }
+
+
+
 }
