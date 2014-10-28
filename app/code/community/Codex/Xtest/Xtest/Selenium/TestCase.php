@@ -16,11 +16,11 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
         $model = Xtest::getXtest($modelClass);
         $model->setTestcase($this);
 
-        $model->setBrowser($this->getBrowser());
-        $model->setBrowserUrl(Mage::getBaseUrl());
-
         $model->setUpSessionStrategy(null);
         $model->prepareSession();
+
+        $model->setBrowser($this->getBrowser());
+        $model->setBrowserUrl(Mage::getBaseUrl());
 
         return $model;
     }

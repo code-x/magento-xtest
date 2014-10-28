@@ -61,11 +61,6 @@ class Codex_Xtest_Model_Phpunit_Session_Pageobject
     static private $mainWindow;
     private $lastTestWasNotSuccessful = FALSE;
 
-    public function __construct()
-    {
-        $this->original = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated();
-    }
-
     public function session(array $parameters)
     {
         if ($this->lastTestWasNotSuccessful) {
@@ -76,6 +71,10 @@ class Codex_Xtest_Model_Phpunit_Session_Pageobject
             $this->lastTestWasNotSuccessful = FALSE;
         }
         if (self::$session === NULL) {
+            if( !$this->original )
+            {
+                $this->original = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated();
+            }
             self::$session = $this->original->session($parameters);
             self::$mainWindow = self::$session->windowHandle();
         } else {

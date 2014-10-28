@@ -16,7 +16,7 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
     protected function setUpSessionStrategy($params)
     {
         self::$browserSessionStrategy = new Codex_Xtest_Model_Phpunit_Session_Pageobject();
-       $this->localSessionStrategy = self::$browserSessionStrategy;
+        $this->localSessionStrategy = self::$browserSessionStrategy;
     }
 
     /**
@@ -161,7 +161,12 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         return $this->getTestCase()->getSeleniumConfig($path);
     }
 
-
+    /**
+     * @param $text
+     * @param bool $exactOnly
+     * @return PHPUnit_Extensions_Selenium2TestCase_Element
+     * @throws Exception
+     */
     public function byLinkText( $text, $exactOnly = false )
     {
         try {
@@ -193,5 +198,11 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
             throw $e;
         }
     }
+
+    function __destruct()
+    {
+        $this->prepareSession()->closeWindow();
+    }
+
 
 }
