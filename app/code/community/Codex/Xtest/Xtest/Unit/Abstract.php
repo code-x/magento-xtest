@@ -123,4 +123,9 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $block = $this->getLayout()->getBlock($nameInLayout);
         $this->assertNotFalse( $block, "Block $nameInLayout not found" );
     }
+
+    public function setExpectedMageException($module, $exceptionMessage = '', $exceptionCode = null)
+    {
+        $this->setExpectedException(get_class(Mage::exception($module)), $exceptionMessage, $exceptionCode);
+    }
 }
