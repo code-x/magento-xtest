@@ -80,6 +80,40 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         parent::setUp();
     }
 
+    protected function runTest()
+    {
+        if ($this->isExternal() && !$this->allowExternal()) {
+            $this->markTestSkipped('Test requires external reference');
+            return false;
+        }
+        return parent::runTest();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isExternal()
+    {
+        $class = get_class($this);
+        $method = $this->getName();
+        $reflection = new ReflectionMethod($class, $method);
+
+        if ($docBlock = $reflection->getDocComment()) {
+            return (strpos($docBlock, '@external') !== false);
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function allowExternal()
+    {
+        $argv = $_SERVER['argv'];
+        return in_array('--external', $argv);
+    }
+
     protected function tearDown()
     {
         /** @var $mailqueue Codex_Xtest_Xtest_Helper_Mailqueue */
