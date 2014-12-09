@@ -95,7 +95,7 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
     protected function isExternal()
     {
         $class = get_class($this);
-        $method = $this->getName();
+        $method = $this->getName(false);
         $reflection = new ReflectionMethod($class, $method);
 
         if ($docBlock = $reflection->getDocComment()) {
