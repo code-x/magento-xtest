@@ -154,9 +154,14 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $request = new Codex_Xtest_Model_Core_Controller_Request_Http();
         $request->setPathInfo($route);
         $request->setParams($params);
+        $request->setParam('nocookie', true);
+
 
         if( $postData ) {
             $request->setMethod( self::METHOD_POST );
+            if( !isset($postData['form_key']) ) {
+                $postData['form_key'] = Mage::getSingleton('core/session')->getFormKey();
+            }
             $request->setPost( $postData );
         }
 
