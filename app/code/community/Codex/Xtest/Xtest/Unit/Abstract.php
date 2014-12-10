@@ -2,10 +2,14 @@
 
 class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
 {
+    const METHOD_GET = 'GET';
+    const METHOD_POST = 'POST';
+
     /**
      * @var Mage_Core_Model_Resource
      */
     protected $_transaction;
+
 
     public function addModelMock($modelClass, $mockClassObj)
     {
@@ -125,11 +129,16 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $db->rollBack();
     }
 
-    public function dispatch($route, $params = array())
+    public function dispatch($route, $params = array(), $postData = null)
     {
-        $request = new Mage_Core_Controller_Request_Http();
+        $request = new Codex_Xtest_Model_Core_Controller_Request_Http();
         $request->setPathInfo($route);
         $request->setParams($params);
+
+        if( $postData ) {
+            $request->setMethod( self::METHOD_POST );
+            $request->setPost( $postData );
+        }
 
         Mage::$headersSentThrowsException = false;
         Mage::app()->setRequest($request);
