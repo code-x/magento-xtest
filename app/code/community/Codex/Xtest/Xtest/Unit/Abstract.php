@@ -129,6 +129,26 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $db->rollBack();
     }
 
+    public function dispatchUrl( $httpUrl, $postData = null )
+    {
+        $request = new Codex_Xtest_Model_Core_Controller_Request_Http();
+        $request->setBaseUrl( Mage::getBaseUrl('web', true) );
+        $request->setRequestUri( $httpUrl );
+        $request->setPathInfo();
+
+        if( $postData ) {
+            $request->setMethod( self::METHOD_POST );
+            $request->setPost( $postData );
+        }
+
+        Mage::$headersSentThrowsException = false;
+        Mage::app()->setRequest($request);
+
+        $dispatcher = new Codex_Xtest_Model_Core_Controller_Varien_Front();
+        $dispatcher->setRouter(Mage::app()->getFrontController()->getRouters());
+        $dispatcher->dispatch();
+    }
+
     public function dispatch($route, $params = array(), $postData = null)
     {
         $request = new Codex_Xtest_Model_Core_Controller_Request_Http();
@@ -165,6 +185,13 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
     {
         $block = $this->getLayout()->getBlock($nameInLayout);
         $this->assertNotFalse( $block, "Block $nameInLayout not found" );
+    }
+
+    protected function assertMailsSent( $expectedMailCnt )
+    {
+        /** @var $mailqueue Codex_Xtest_Xtest_Helper_Mailqueue */
+        $mailqueue = Xtest::getXtest('xtest/helper_mailqueue');
+        $this->assertEquals($expectedMailCnt , $mailqueue->getCount(), 'wrong mailcount' );
     }
 
     public function setExpectedMageException($module, $exceptionMessage = '', $exceptionCode = null)
