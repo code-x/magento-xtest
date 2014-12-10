@@ -33,6 +33,14 @@ class Codex_Xtest_Xtest_Helper_Mailqueue
         $mailObject->setUseAbsoluteLinks(true);
         $text = $mailObject->getProcessedTemplate($variables, true);
 
+        if( empty($email) ) {
+            throw new Exception("no mailaddress, no party");
+        }
+
+        if( empty($text) ) {
+            throw new Exception("sending an empty mail is not supported");
+        }
+
         self::$_mailqueue[] = array(
             'variables' => $variables,
             'emails' => $emails,
