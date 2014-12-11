@@ -35,6 +35,7 @@ class Xtest
     {
         $options = array();
         $options['config_model'] = 'Codex_Xtest_Model_Core_Config';
+        $options['cache_dir'] = Mage::getBaseDir('var').DS.'cache'.DS.'xtest';
 
         Mage::reset();
         Mage::app($code, 'store', $options);
