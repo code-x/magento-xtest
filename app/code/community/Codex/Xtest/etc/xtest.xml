@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<config>
+
+
+    <default>
+        <xtest>
+            <fixtures>
+
+                <customer>
+                    <email>devnull@code-x.de</email>
+                    <firstname>Test Vorname</firstname>
+                    <lastname>Test Nachname</lastname>
+
+                    <billing_address>
+                        <firstname>Xtest Firstname</firstname>
+                        <lastname>Xtest Lastname</lastname>
+                        <street>Xtest Street</street>
+                        <city>Xtest City</city>
+                        <postcode>33100</postcode>
+                        <telephone>Xtest Phone</telephone>
+                        <country_id>DE</country_id>
+                        <region_id></region_id>
+                    </billing_address>
+
+                    <shipping_address>
+                        <firstname>Xtest Firstname</firstname>
+                        <lastname>Xtest Lastname</lastname>
+                        <street>Xtest Street</street>
+                        <city>Xtest City</city>
+                        <postcode>33100</postcode>
+                        <telephone>Xtest Phone</telephone>
+                        <country_id>DE</country_id>
+                        <region_id></region_id>
+                    </shipping_address>
+
+                </customer>
+
+                <order>
+
+                    <customer_id>0</customer_id>
+
+                    <payment_method>
+                        <method>debit</method>
+                        <debit_cc_owner>Test</debit_cc_owner>
+                        <debit_iban>Test</debit_iban>
+                        <debit_swift>Test</debit_swift>
+                        <!-- some other options-->
+                    </payment_method>
+
+                    <shipping_method>
+                        <method>flatrate_flatrate</method>
+                    </shipping_method>
+
+                    <billing_address>
+                        <firstname>Xtest Firstname</firstname>
+                        <lastname>Xtest Lastname</lastname>
+                        <street>Xtest Street</street>
+                        <city>Xtest City</city>
+                        <postcode>33100</postcode>
+                        <telephone>Xtest Phone</telephone>
+                        <country_id>DE</country_id>
+                        <region_id></region_id>
+                    </billing_address>
+
+                    <shipping_address>
+                        <firstname>Xtest Firstname</firstname>
+                        <lastname>Xtest Lastname</lastname>
+                        <street>Xtest Street</street>
+                        <city>Xtest City</city>
+                        <postcode>33100</postcode>
+                        <telephone>Xtest Phone</telephone>
+                        <country_id>DE</country_id>
+                        <region_id></region_id>
+                    </shipping_address>
+
+                    <items>
+                        <!--
+                        <item sku="1234">
+                            <qty>1</qty>
+                        </item>
+                        -->
+                    </items>
+
+                </order>
+            </fixtures>
+        </xtest>
+    </default>
+</config>
