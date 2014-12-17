@@ -1,50 +1,54 @@
 <?php
 
-class Codex_Xtest_Xtest_Fixture_Quote extends Codex_Xtest_Xtest_Fixture_Abstract
+class Codex_Xtest_Xtest_Fixture_Quote
 {
 
     public function getTest()
     {
         /* @var $quote Mage_Sales_Model_Quote */
-        $quote = Mage::getModel('sales/quote')->setStoreId(Mage::app()->getStore()->getId());
+        $quote = Mage::getModel('sales/quote')
+            ->setStoreId(Mage::app()->getStore('default')->getId());
 
-        if( $customer_id = $this->getConfigFixture('order/customer_id') )
-        {
-            $customer = Mage::getModel('customer/customer');
-            $customer->load( (int)$customer_id );
-            $quote->setCustomer( $customer );
-        }
+        $customer = Mage::getModel('customer/customer')
+            ->setWebsiteId(1)
+            ->loadByEmail('magento@code-x.de');
+        $quote->assignCustomer($customer);
 
-        $items = $this->getConfigFixture('order/items');
-        foreach( $items AS $item )
-        {
-            /* @var $product Mage_Catalog_Model_Product */
-            $product = Mage::getModel('catalog/product');
+        // add product
+        $productId = 1;
 
-            if( $item['product_id'] ) {
-                $product->load( $item['product_id'] );
-            } elseif( $item['sku'] ) {
-                $product->load( $product->getIdBySku( $item['sku'] ) );
-            } else {
-                Mage::throwException('product not found');
-            }
+        /* @var $product Mage_Catalog_Model_Product */
+        $product = Mage::getModel('catalog/product');
 
-            $quote->addProduct($product, new Varien_Object($item));
-        }
+        $buyInfo = array('qty' => 1);
+        $quote->addProduct($product->load($productId), new Varien_Object($buyInfo));
 
-        $billingAddress  = $quote->getBillingAddress()->addData( $this->getConfigFixture('order/billing_address') );
-        $shippingAddress = $quote->getShippingAddress()->addData( $this->getConfigFixture('order/shipping_address') );
+        $addressData     = array(
+            'firstname'  => 'Test',
+            'lastname'   => 'Test',
+            'street'     => 'Sample Street 10',
+            'city'       => 'Somewhere',
+            'postcode'   => '123456',
+            'telephone'  => '123456',
+            'country_id' => 'US',
+            'region_id'  => 12, // id from directory_country_region table
+        );
+        $billingAddress  = $quote->getBillingAddress()->addData($addressData);
+        $shippingAddress = $quote->getShippingAddress()->addData($addressData);
 
         $quote->getShippingAddress()
             ->setCollectShippingRates(true)
-            ->setShippingMethod( $this->getConfigFixture('order/shipping_method/method') )
-            ->setPaymentMethod( $this->getConfigFixture('order/payment_method/method') );
+            ->setShippingMethod('api_api')
+            ->setPaymentMethod('debit');
 
-        if( $importData = $this->getConfigFixture('order/payment_method') )
-        {
-            $quote->getPayment()->importData( $importData );
-        }
-
+        $quote->getPayment()->importData(
+            array(
+                'debit_cc_owner' => 'Test',
+                'debit_iban' => 'Test',
+                'debit_swift' => 'Test',
+                'method' => 'debit',
+            )
+        );
         $quote->collectTotals()->save();
         return $quote;
     }

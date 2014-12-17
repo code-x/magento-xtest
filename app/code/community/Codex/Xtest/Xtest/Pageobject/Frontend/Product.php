@@ -6,10 +6,6 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Product extends Codex_Xtest_Xtest_Pa
     /** @var  Mage_Catalog_Model_Product */
     protected $_product;
 
-    public function openBySku( $sku )
-    {
-        $this->open( Mage::getModel('catalog/product')->getIdBySku( $sku ) );
-    }
 
     public function open( $product_id )
     {

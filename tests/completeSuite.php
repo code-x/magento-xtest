@@ -33,10 +33,10 @@ class completeSuite  {
                 $paths[] = $pathName;
             } elseif ($fileInfo->isFile()) {
                 if ((substr(strtolower($fileName), -12) == 'testcase.php') || (substr(strtolower($fileName), -8) == 'test.php')) {
-
-                    if( stripos( file_get_contents($pathName), 'ecomdev' ) === false ) {
-                        // do not add ecomdev phpunit
-                        $files[] = $pathName;
+                    $files[] = $pathName;
+                } elseif ((substr(strtolower($fileName), -4) == '.php')) {
+                    if (strpos(strtolower($fileName), 'bootstrap') === false && strpos(strtolower($fileName), 'abstract') === false) {
+                        // echo "WARNING: Found php file that is not a test file: $fileName\n";
                     }
                 }
             }
@@ -94,15 +94,12 @@ class completeSuite  {
      */
     public static function suite() {
 
-        $tmpSuite = new PHPUnit_Framework_TestSuite();;
-
         $testSuiteLocal = self::createSuiteFromPath( Mage::getConfig()->getOptions()->getCodeDir().DS.'local' );
-        $testSuiteCommunity = self::createSuiteFromPath( Mage::getConfig()->getOptions()->getCodeDir().DS.'community' );
+        // $testSuiteCommunity = self::createSuiteFromPath( Mage::getConfig()->getOptions()->getCodeDir().DS.'community' );
 
-        $tmpSuite->addTestSuite( $testSuiteLocal );
-        $tmpSuite->addTestSuite( $testSuiteCommunity );
+        //var_Dump( count($testSuiteLocal) );
 
-        return $tmpSuite;
+        return $testSuiteLocal;
     }
 }
 

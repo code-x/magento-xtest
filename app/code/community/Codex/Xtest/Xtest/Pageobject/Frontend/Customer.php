@@ -3,17 +3,9 @@
 class Codex_Xtest_Xtest_Pageobject_Frontend_Customer extends Codex_Xtest_Xtest_Pageobject_Abstract
 {
 
-    public function open()
-    {
-        $url = Mage::getUrl('customer/account');
-        if ( $url != $this->url() ) {
-            $this->url($url);
-        }
-    }
-
     public function login($user, $password)
     {
-        $this->open();
+        $this->url(Mage::getUrl('customer/account'));
 
         $this->getLoginEmailInput()->value($user);
         $this->getLoginPasswordInput()->value($password);

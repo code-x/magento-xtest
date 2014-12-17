@@ -1,4 +1,3 @@
-app/code/community/Mage/* app/code/community/Mage/
 app/code/community/Codex/* app/code/community/Codex/
 app/etc/modules/* app/etc/modules/
 tests/* tests/

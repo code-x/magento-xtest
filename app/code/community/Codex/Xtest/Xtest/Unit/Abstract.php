@@ -7,20 +7,14 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
      */
     protected $_transaction;
 
-    public function addModelMock($modelClass, $mockClassObj)
+    public function getMageConfig()
     {
-        Xtest::getConfig()->addModelMock($modelClass, $mockClassObj);
-        $this->assertEquals($mockClassObj, Mage::getModel($modelClass));
+        return Xtest::getConfig();
     }
 
-    public function addHelperMock($helperName, $mockClassObj)
+    public function addModelMock($modelClass, $mockClassObj)
     {
-        Xtest::getConfig()->addHelperMock($helperName, $mockClassObj);
-        $this->assertEquals($mockClassObj, Mage::helper($helperName));
-
-        if (strpos($helperName, '/') === false) {
-            $this->assertEquals($mockClassObj, Mage::helper($helperName . '/data'));
-        }
+        $this->getMageConfig()->addModelMock($modelClass, $mockClassObj);
     }
 
     public function getModelMock(
@@ -47,45 +41,16 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function getHelperMock(
-        $originalClassName,
-        $methods = array(),
-        array $arguments = array(),
-        $mockClassName = '',
-        $callOriginalConstructor = true,
-        $callOriginalClone = true,
-        $callAutoload = true,
-        $cloneArguments = false,
-        $callOriginalMethods = false
-    ) {
-        return $this->getMock(
-            Mage::getConfig()->getHelperClassName($originalClassName),
-            $methods,
-            $arguments,
-            $mockClassName,
-            $callOriginalConstructor,
-            $callOriginalClone,
-            $callAutoload,
-            $cloneArguments,
-            $callOriginalMethods
-        );
-    }
 
     protected function setUp()
     {
         $db = Mage::getSingleton('core/resource')->getConnection('core_write');
-        $db->query('SET autocommit=0;');
         $db->beginTransaction();
-
         parent::setUp();
     }
 
     protected function tearDown()
     {
-        /** @var $mailqueue Codex_Xtest_Xtest_Helper_Mailqueue */
-        $mailqueue = Xtest::getXtest('xtest/helper_mailqueue');
-        $mailqueue->reset();
-
         parent::tearDown();
         $db = Mage::getSingleton('core/resource')->getConnection('core_write');
         $db->rollBack();
