@@ -27,4 +27,4 @@ cp -rf ${WORKSPACE} ${BUILDENV}/.modman/
 ${BUILDENV}/install.sh
 
 cd ${BUILDENV}/htdocs/tests
-php phpunit.phar --colors -d display_errors=1 completeUnitSuite.php
+php phpunit.phar --colors -d display_errors=1 ../app/code/community/Codex/Xtest/Test/
