@@ -15,7 +15,7 @@ env:
 #  - MAGENTO_VERSION=magento-ce-1.8.0.0
 #  - MAGENTO_VERSION=magento-ce-1.7.0.2
 script:
-  - sh ./travis.sh
+  - ./travis.sh
 notifications:
   email:
     recipients:
