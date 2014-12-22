@@ -98,6 +98,7 @@ class completeSuite  {
     public static function suite() {
 
         $tmpSuite = new PHPUnit_Framework_TestSuite();
+        $tmpSuite = new PHPUnit_Framework_TestSuite();;
 
         $testSuiteLocal = self::createSuiteFromPath( Mage::getConfig()->getOptions()->getCodeDir().DS.'local' );
         $testSuiteCommunity = self::createSuiteFromPath( Mage::getConfig()->getOptions()->getCodeDir().DS.'community' );
