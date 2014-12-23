@@ -19,4 +19,10 @@ class Codex_Xtest_Test_Unit_FrontendTest extends Codex_Xtest_Xtest_Unit_Frontend
         $this->assertInstanceOf('Mage_Page_Block_Html', $this->getLayout()->getBlock('root') );
     }
 
+    public function test404Exception()
+    {
+        $this->setExpectedMageException('Mage_Core', '404');
+        $this->dispatch('customer/404/action');
+    }
+
 }

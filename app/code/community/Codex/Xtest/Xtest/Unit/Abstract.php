@@ -136,17 +136,7 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $request->setRequestUri( $httpUrl );
         $request->setPathInfo();
 
-        if( $postData ) {
-            $request->setMethod( self::METHOD_POST );
-            $request->setPost( $postData );
-        }
-
-        Mage::$headersSentThrowsException = false;
-        Mage::app()->setRequest($request);
-
-        $dispatcher = new Codex_Xtest_Model_Core_Controller_Varien_Front();
-        $dispatcher->setRouter(Mage::app()->getFrontController()->getRouters());
-        $dispatcher->dispatch();
+        $this->_doDispatch( $request, $postData );
     }
 
     public function dispatch($route, $params = array(), $postData = null)
@@ -156,7 +146,11 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $request->setParams($params);
         $request->setParam('nocookie', true);
 
+        $this->_doDispatch( $request, $postData );
+    }
 
+    protected function _doDispatch( Codex_Xtest_Model_Core_Controller_Request_Http $request, $postData = null )
+    {
         if( $postData ) {
             $request->setMethod( self::METHOD_POST );
             if( !isset($postData['form_key']) ) {
@@ -171,6 +165,14 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $dispatcher = new Codex_Xtest_Model_Core_Controller_Varien_Front();
         $dispatcher->setRouter(Mage::app()->getFrontController()->getRouters());
         $dispatcher->dispatch();
+
+        foreach( $dispatcher->getResponse()->getHeaders() AS $header )
+        {
+            if( $header['value'] == '404 Not Found' )
+            {
+                Mage::throwException('404');
+            }
+        }
     }
 
     public function getResponseBody()
