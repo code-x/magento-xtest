@@ -34,11 +34,11 @@ class Codex_Xtest_Xtest_Helper_Mailqueue
         $text = $mailObject->getProcessedTemplate($variables, true);
 
         if( empty($email) ) {
-            throw new Exception("no mailaddress, no party");
+            throw Mage::exception('Codex_Xtest', 'to is empty', Codex_Xtest_Exception::EMPTY_MAIL_RECIPIENT);
         }
 
         if( empty($text) ) {
-            throw new Exception("sending an empty mail is not supported");
+            throw Mage::exception('Codex_Xtest', 'body is empty', Codex_Xtest_Exception::EMPTY_MAIL_BODY);
         }
 
         self::$_mailqueue[] = array(
