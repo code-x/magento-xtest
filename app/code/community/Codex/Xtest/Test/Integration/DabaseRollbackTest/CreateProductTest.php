@@ -1,11 +1,14 @@
 <?php
 
-class Codex_Xtest_Test_Integration_DabaseRollbackTest_CreateProduct extends Codex_Xtest_Xtest_Unit_Frontend
+class Codex_Xtest_Test_Integration_DabaseRollbackTest_CreateProductTest extends Codex_Xtest_Xtest_Unit_Frontend
 {
 
+    /**
+     * Test if creating a product is successfully
+     */
     public function testCreateProduct()
     {
-        $testSku = Codex_Xtest_Test_Integration_DatabaseRollbackTest::$testSku;
+        $testSku = Codex_Xtest_Test_Integration_DatabaseRollbackTest::TEST_SKU;
 
         $product = Mage::getModel('catalog/product');
 
@@ -21,6 +24,15 @@ class Codex_Xtest_Test_Integration_DabaseRollbackTest_CreateProduct extends Code
 
         $product = Mage::getModel('catalog/product');
         $this->assertNotFalse( $product->getIdBySku( $testSku ) );
+    }
+
+    /**
+     * Checks if product is gone after first test
+     */
+    public function testCreateProductStillNotExists()
+    {
+        $product = Mage::getModel('catalog/product');
+        $this->assertFalse( $product->getIdBySku( Codex_Xtest_Test_Integration_DatabaseRollbackTest::TEST_SKU ) );
     }
 
 }

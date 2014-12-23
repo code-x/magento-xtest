@@ -1,41 +1,35 @@
 <?php
 
-require_once __DIR__.'/DabaseRollbackTest/CreateProduct.php';
-
 /**
  * Class Codex_Xtest_Test_Integration_DatabaseRollbackTest
  *
  */
-class Codex_Xtest_Test_Integration_DatabaseRollbackTest extends PHPUnit_Framework_TestCase
+class Codex_Xtest_Test_Integration_DatabaseRollbackTest extends Codex_Xtest_Xtest_Unit_Frontend
 {
-    public static $testSku;
+    const TEST_SKU = 'DEL-50873';
 
     public static function setUpBeforeClass()
     {
-        self::$testSku = uniqid();
         parent::setUpBeforeClass();
     }
 
     /**
      * Checks if databases rolls back correctly
      *
+     * @uses Codex_Xtest_Test_Integration_DabaseRollbackTest_CreateProduct
      */
     public function testProductRollback()
     {
         $product = Mage::getModel('catalog/product');
+        $this->assertFalse( $product->getIdBySku( self::TEST_SKU ) );
 
-        $this->assertFalse( $product->getIdBySku( self::$testSku ) );
+        $cmd = Mage::getBaseDir().'/tests/phpunit.phar '.escapeshellarg(__DIR__.'/DabaseRollbackTest/CreateProductTest.php');
 
-        $suite = new PHPUnit_Framework_TestSuite(
-            'Codex_Xtest_Test_Integration_DabaseRollbackTest_CreateProduct'
-        );
+        $result = $return_var = null;
+        exec('php '.$cmd, $result, $return_var);
+        $this->assertEquals(0, $return_var ); // return 0 when test is succesfully
 
-        $result = $suite->run();
-        $this->assertEquals(0, count($result->failures()  ) );
-        $this->assertEquals(1, count($result->passed()) );
-        $this->assertTrue( $result->wasSuccessful() );
-
-        $this->assertFalse( $product->getIdBySku( self::$testSku ) );
+        $this->assertFalse( $product->getIdBySku( self::TEST_SKU ) );
     }
 
 }
