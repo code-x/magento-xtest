@@ -3,6 +3,8 @@ Xtest
 
 Simple Magento Testing Framework - still working on it. Do not use :-)
 
+[![Build Status](https://travis-ci.org/code-x/Xtest.svg?branch=develop)](https://travis-ci.org/code-x/Xtest)
+
 ## Unit-Test
 
 ### Database
