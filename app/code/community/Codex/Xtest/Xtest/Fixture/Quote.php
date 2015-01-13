@@ -3,7 +3,7 @@
 class Codex_Xtest_Xtest_Fixture_Quote extends Codex_Xtest_Xtest_Fixture_Abstract
 {
 
-    public function getTest()
+    public function getTest( $customer = null )
     {
         /* @var $quote Mage_Sales_Model_Quote */
         $quote = Mage::getModel('sales/quote')->setStoreId(Mage::app()->getStore()->getId());
@@ -12,6 +12,11 @@ class Codex_Xtest_Xtest_Fixture_Quote extends Codex_Xtest_Xtest_Fixture_Abstract
         {
             $customer = Mage::getModel('customer/customer');
             $customer->load( (int)$customer_id );
+            $quote->setCustomer( $customer );
+        }
+
+        if( $customer )
+        {
             $quote->setCustomer( $customer );
         }
 
