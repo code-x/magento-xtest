@@ -33,6 +33,8 @@ class Xtest
 
     protected static function init($code)
     {
+        Mage::$headersSentThrowsException = false;
+
         $options = array();
         $options['config_model'] = 'Codex_Xtest_Model_Core_Config';
         $options['cache_dir'] = Mage::getBaseDir('var').DS.'cache'.DS.'xtest';
