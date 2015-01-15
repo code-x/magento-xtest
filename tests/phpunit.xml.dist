@@ -16,12 +16,6 @@
 
     <filter>
 
-        <!--
-        <whitelist>
-            <directory suffix=".php">/Users/tobias/Documents/www/pos-tuning/modules/local</directory>
-        </whitelist>
-        -->
-
         <whitelist>
             <directory suffix=".php">../../../../modules/local</directory>
         </whitelist>
