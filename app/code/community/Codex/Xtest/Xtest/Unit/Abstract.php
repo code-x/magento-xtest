@@ -201,6 +201,20 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedMailCnt , $mailqueue->getCount(), 'wrong mailcount' );
     }
 
+    protected function assertMailTemplateIdSent( $templateId )
+    {
+        /** @var $mailqueue Codex_Xtest_Xtest_Helper_Mailqueue */
+        $mailqueue = Xtest::getXtest('xtest/helper_mailqueue');
+
+        $templateIds = array();
+        foreach( $mailqueue->getQueue() AS $queueItem )
+        {
+            $templateIds[] = $queueItem['object']->getId();
+        }
+
+        $this->assertTrue( in_array($templateId, $templateIds), "$templateId is not send: ".join(',', $templateIds) );
+    }
+
     public function setExpectedMageException($module, $exceptionMessage = '', $exceptionCode = null)
     {
         $this->setExpectedException(get_class(Mage::exception($module)), $exceptionMessage, $exceptionCode);

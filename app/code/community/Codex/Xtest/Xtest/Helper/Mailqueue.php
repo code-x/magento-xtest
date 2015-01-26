@@ -15,6 +15,11 @@ class Codex_Xtest_Xtest_Helper_Mailqueue
         return end( self::$_mailqueue );
     }
 
+    public function getQueue()
+    {
+        return self::$_mailqueue;
+    }
+
     public function addMail( Mage_Core_Model_Email_Template $mailObject, $email, $name, $variables )
     {
 
@@ -44,7 +49,8 @@ class Codex_Xtest_Xtest_Helper_Mailqueue
         self::$_mailqueue[] = array(
             'variables' => $variables,
             'emails' => $emails,
-            'body' => $text
+            'body' => $text,
+            'object' => $mailObject
         );
 
         return $this;
