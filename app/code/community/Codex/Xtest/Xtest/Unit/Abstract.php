@@ -180,6 +180,18 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         return trim( Mage::app()->getResponse()->getBody() );
     }
 
+    public function getRedirectLocation()
+    {
+        foreach( Mage::app()->getResponse()->getHeaders() AS $header )
+        {
+            if( strtolower($header['name']) == 'location' )
+            {
+                return $header['value'];
+            }
+        }
+        return false;
+    }
+
     /**
      * @return Mage_Core_Model_Layout
      */
