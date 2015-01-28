@@ -40,8 +40,6 @@ class Codex_Xtest_Xtest_Fixture_Quote extends Codex_Xtest_Xtest_Fixture_Abstract
         $billingAddress  = $quote->getBillingAddress()->addData( $this->getConfigFixture('order/billing_address') );
         $shippingAddress = $quote->getShippingAddress()->addData( $this->getConfigFixture('order/shipping_address') );
 
-        $quote->collectTotals()->save();
-
         $quote->getShippingAddress()
             ->setCollectShippingRates(true)
             ->setShippingMethod( $this->getConfigFixture('order/shipping_method/method') )
