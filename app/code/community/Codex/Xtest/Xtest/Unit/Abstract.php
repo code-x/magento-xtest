@@ -200,6 +200,12 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         return Mage::app()->getLayout();
     }
 
+    public function assertLayoutBlockNotExists($nameInLayout)
+    {
+        $block = $this->getLayout()->getBlock($nameInLayout);
+        $this->assertFalse( $block, "Block $nameInLayout not found" );
+    }
+
     public function assertLayoutBlockExists($nameInLayout)
     {
         $block = $this->getLayout()->getBlock($nameInLayout);
