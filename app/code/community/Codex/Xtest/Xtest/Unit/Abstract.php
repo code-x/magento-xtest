@@ -79,7 +79,10 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
     {
         $db = Mage::getSingleton('core/resource')->getConnection('core_write');
         $db->query('SET autocommit=0;');
-        $db->beginTransaction();
+
+        for($i=0; $i<25; $i++) {
+            $db->beginTransaction();
+        }
 
         parent::setUp();
     }
@@ -126,7 +129,10 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
 
         parent::tearDown();
         $db = Mage::getSingleton('core/resource')->getConnection('core_write');
-        $db->rollBack();
+
+        for($i=0; $i<25; $i++) {
+            $db->rollBack();
+        }
     }
 
     public function dispatchUrl( $httpUrl, $postData = null )
