@@ -5,6 +5,12 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
     const METHOD_GET = 'GET';
     const METHOD_POST = 'POST';
 
+    /**
+     * @var Mage_Core_Model_Resource
+     */
+    protected $_transaction;
+
+
     public function addModelMock($modelClass, $mockClassObj)
     {
         Xtest::getConfig()->addModelMock($modelClass, $mockClassObj);
@@ -69,17 +75,14 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         );
     }
 
-    public static function setUpBeforeClass()
+    protected function setUp()
     {
         $db = Mage::getSingleton('core/resource')->getConnection('core_write');
-        $db->query('set autocommit=0');
-        $db->query("START TRANSACTION");
+        $db->query('SET autocommit=0;');
+        $db->beginTransaction();
 
-        $db->query('SAVEPOINT xtest');
-
-        parent::setUpBeforeClass();
+        parent::setUp();
     }
-
 
     protected function runTest()
     {
@@ -123,7 +126,7 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
 
         parent::tearDown();
         $db = Mage::getSingleton('core/resource')->getConnection('core_write');
-        $db->query('ROLLBACK TO xtest');
+        $db->rollBack();
     }
 
     public function dispatchUrl( $httpUrl, $postData = null )

@@ -48,10 +48,4 @@ class Codex_Xtest_Model_Core_Resource extends Mage_Core_Model_Resource
         return $connection;
     }
 
-    protected function _getConnectionAdapterClassName($type)
-    {
-        return 'Codex_Xtest_Model_Varien_Db_Adapter_Pdo_Mysql';
-    }
-
-
 }
