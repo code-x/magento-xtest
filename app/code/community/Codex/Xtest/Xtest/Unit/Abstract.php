@@ -79,6 +79,8 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
     {
         $db = Mage::getSingleton('core/resource')->getConnection('core_write');
         $db->query('SET autocommit=0;');
+        $db->query('SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED');
+        $db->query('START TRANSACTION');
 
         for($i=0; $i<25; $i++) {
             $db->beginTransaction();
@@ -133,6 +135,9 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         for($i=0; $i<25; $i++) {
             $db->rollBack();
         }
+
+        $db->query('ROLLBACK');
+
     }
 
     public function dispatchUrl( $httpUrl, $postData = null )
