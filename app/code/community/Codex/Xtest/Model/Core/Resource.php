@@ -40,12 +40,16 @@ class Codex_Xtest_Model_Core_Resource extends Mage_Core_Model_Resource
      */
     public function getConnection($name)
     {
-        static $connection;
-        if( !$connection )
-        {
-            $connection = parent::getConnection('default_setup');
+        if( defined('XTEST_BOOTSTRAPPED') ) {
+            static $connection;
+            if( !$connection )
+            {
+                $connection = parent::getConnection('core_write');
+            }
+            return $connection;
         }
-        return $connection;
+
+        return parent::getConnection('default_setup');
     }
 
 }

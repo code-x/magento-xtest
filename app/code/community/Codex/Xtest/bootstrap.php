@@ -9,6 +9,8 @@ if( file_exists( $mageFile ) ) {
 
     Mage::app('admin', 'store', array( 'config_model' => 'Codex_Xtest_Model_Core_Config' ));
 
+    define('XTEST_BOOTSTRAPPED', true);
+
 } else {
     throw new Exception("Mage.php not found.");
 }

@@ -57,6 +57,13 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
             $obj = new $mockClassName($constructArguments);
             return $obj;
         }
+
+        if( $modelName == 'Mage_Core_Model_Resource' )
+        {
+            $obj = new Codex_Xtest_Model_Core_Resource($constructArguments);
+            return $obj;
+        }
+
         return parent::getModelInstance($modelClass, $constructArguments);
     }
 
