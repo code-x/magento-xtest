@@ -13,4 +13,10 @@ class Codex_Xtest_Model_Varien_Db_Adapter_Pdo_Mysql extends Varien_Db_Adapter_Pd
         return $this;
     }
 
+    public function beginTransaction()
+    {
+        return $this;
+    }
+
+
 }

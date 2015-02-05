@@ -72,10 +72,10 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
     public static function setUpBeforeClass()
     {
         $db = Mage::getSingleton('core/resource')->getConnection('core_write');
-        $db->beginTransaction();
+        $db->query('set autocommit=0');
+        $db->query("START TRANSACTION");
 
         $db->query('SAVEPOINT xtest');
-        $db->query('set autocommit=0');
 
         parent::setUpBeforeClass();
     }
