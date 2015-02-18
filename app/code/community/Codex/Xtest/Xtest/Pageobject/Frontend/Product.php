@@ -37,7 +37,14 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Product extends Codex_Xtest_Xtest_Pa
 
     public function pressAddToCart()
     {
-        $this->getAddToCartForm()->byCssSelector('.add-to-cart-buttons button')->click();
+        $elements = $this->findElementsByCssSelector('.add-to-cart-buttons button', $this->getAddToCartForm() );
+        foreach( $elements AS $element )
+        {
+            if( $element->displayed() )
+            {
+                $element->click();
+            }
+        }
         return $this;
     }
 
