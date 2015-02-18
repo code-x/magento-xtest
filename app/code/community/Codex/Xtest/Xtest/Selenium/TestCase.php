@@ -94,4 +94,25 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
     }
 
 
+
+    protected function runTest()
+    {
+        try {
+            return parent::runTest();
+        } catch( Exception $e )
+        {
+
+            if( in_array('--debug', $_SERVER['argv'] ) )
+            {
+
+                echo PHP_EOL."got '".$e->getMessage()."' exception. press any key to continue..".PHP_EOL;
+                ob_end_flush();
+
+                fgets(STDIN);
+                throw $e;
+
+
+            }
+        }
+    }
 }

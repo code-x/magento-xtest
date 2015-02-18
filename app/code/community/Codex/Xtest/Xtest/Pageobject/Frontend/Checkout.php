@@ -68,7 +68,13 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Checkout extends Codex_Xtest_Xtest_P
             $data = $this->getSeleniumConfig('checkout/payment_method');
         }
 
-        $this->getActiveStepElement()->byId('p_method_'.$data['method'])->click();
+        try {
+            $this->getActiveStepElement()->byId('p_method_'.$data['method'])->click();
+        } catch( Exception $e )
+        {
+            // TODO: Wenn es nur eine gibt vorher logisch abfangen
+        }
+
         unset( $data['method'] );
 
         foreach( $data AS $key => $value )
@@ -121,6 +127,8 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Checkout extends Codex_Xtest_Xtest_P
             }
             return null;
         }, 60000);
+
+        sleep(0.5); // Rendering Time
     }
 
 }
