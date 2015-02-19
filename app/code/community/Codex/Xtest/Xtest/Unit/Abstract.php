@@ -10,6 +10,7 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
      */
     protected $_transaction;
 
+    protected $_screenshots;
 
     public function addModelMock($modelClass, $mockClassObj)
     {
@@ -237,4 +238,34 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(get_class(Mage::exception($module)), $exceptionMessage, $exceptionCode);
     }
+
+    public function renderHtml( $name, $html )
+    {
+        $fileName = uniqid().'.html';
+        $file = Mage::getBaseDir().'/'.$fileName;
+
+        file_put_contents( $file, $html );
+
+        $test = new Codex_Xtest_Xtest_Selenium_TestCase();
+        $test->run();
+
+        /** @var Codex_Xtest_Xtest_Pageobject_Abstract $page */
+        $page = $test->getPageObject('xtest/pageobject_abstract');
+
+        $page->url( dirname(Mage::getBaseUrl('media')).'/'.$fileName );
+        $page->takeResponsiveScreenshots( $name );
+
+        foreach( $test->getScreenshots() AS $screen )
+        {
+            $this->_screenshots[] = $screen;
+        }
+
+        unlink($file);
+    }
+
+    public function getScreenshots()
+    {
+        return $this->_screenshots;
+    }
+
 }

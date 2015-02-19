@@ -93,8 +93,6 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
         parent::tearDownAfterClass();
     }
 
-
-
     protected function runTest()
     {
         try {
@@ -109,10 +107,10 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
                 ob_end_flush();
 
                 fgets(STDIN);
-                throw $e;
-
 
             }
+
+            throw $e;
         }
     }
 }
