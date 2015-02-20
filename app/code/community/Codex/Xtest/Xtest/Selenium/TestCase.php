@@ -6,12 +6,6 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
 
     protected $_resetSession = true;
 
-    public function __construct($name = null, array $data = array(), $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
-        Xtest::initFrontend();
-    }
-
     /**
      * @param $modelClass
      * @return Codex_Xtest_Xtest_Pageobject_Abstract
