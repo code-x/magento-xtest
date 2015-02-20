@@ -199,7 +199,41 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         }
     }
 
+    public function waitForAjax()
+    {
 
+        $this->waitUntil(function ( ) {
+                try {
+                    $activeConnections = 0;
+                    $activeConnections += $this->execute(
+                        array(
+                            'script' => 'return jQuery.active',
+                            'args'   => array()
+                        )
+                    );
+
+                    $activeConnections += $this->execute(
+                        array(
+                            'script' => 'return Ajax.activeRequestCount',
+                            'args'   => array()
+                        )
+                    );
+
+                    if( $activeConnections == 0  )
+                    {
+                        return true;
+                    }
+
+                    return null;
+
+                } catch( Exception $e ) {
+                    return true;
+                }
+                return null;
+            }, 60000);
+
+        sleep(0.5); // Rendering Time
+    }
 
 
 }
