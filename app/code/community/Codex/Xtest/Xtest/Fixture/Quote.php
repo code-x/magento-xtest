@@ -15,7 +15,11 @@ class Codex_Xtest_Xtest_Fixture_Quote extends Codex_Xtest_Xtest_Fixture_Abstract
         /* @var $quote Mage_Sales_Model_Quote */
         $quote = Mage::getModel('sales/quote')->setStoreId(Mage::app()->getStore()->getId());
 
-        if( $customer_id = $this->getConfigFixture('order/customer_id') )
+        if( $customer )
+        {
+            $quote->setCustomer( $customer );
+
+        } else if( $customer_id = $this->getConfigFixture('order/customer_id') )
         {
             $customer = Mage::getModel('customer/customer');
             $customer->load( (int)$customer_id );
@@ -25,11 +29,6 @@ class Codex_Xtest_Xtest_Fixture_Quote extends Codex_Xtest_Xtest_Fixture_Abstract
             {
                 $quote->setData('customer_'.$k, $v);
             }
-        }
-
-        if( $customer )
-        {
-            $quote->setCustomer( $customer );
         }
 
         $items = $this->getConfigFixture('order/items');
