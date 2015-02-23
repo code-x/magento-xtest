@@ -3,6 +3,8 @@
 class Xtest
 {
 
+    protected static $args = null;
+
     public static function initAdmin()
     {
         self::init('admin');
@@ -76,4 +78,44 @@ class Xtest
             $object->$method($observer);
         }
     }
+
+    /**
+     * Parse input arguments
+     *
+     * @return Mage_Shell_Abstract
+     */
+    protected function _parseArgs()
+    {
+        self::$args = array();
+        $current = null;
+        foreach ($_SERVER['argv'] as $arg) {
+            $match = array();
+            if (preg_match('#^--([\w\d_-]{1,})$#', $arg, $match) || preg_match('#^-([\w\d_]{1,})$#', $arg, $match)) {
+                $current = $match[1];
+                self::$args[$current] = true;
+            } else {
+                if ($current) {
+                    self::$args[$current] = $arg;
+                } else if (preg_match('#^([\w\d_]{1,})$#', $arg, $match)) {
+                    self::$args[$match[1]] = true;
+                }
+            }
+        }
+        return $this;
+    }
+
+    public static function getArg($name, $default)
+    {
+        if( self::$args === null )
+        {
+            self::_parseArgs();
+        }
+
+        if (isset(self::$args[$name])) {
+            return self::$args[$name];
+        }
+
+        return $default;
+    }
+
 }

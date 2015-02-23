@@ -30,7 +30,7 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
         parent::setUp();
 
         $this->_screenshots = array();
-        $this->setBrowser('firefox'); // TODO
+        $this->setBrowser( Xtest::getArg('browser', 'firefox') );
         $this->setBrowserUrl(Mage::getBaseUrl());
 
         $this->setUpSessionStrategy(null);
@@ -61,12 +61,6 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
         }
 
         $this->localSessionStrategy = self::$browserSessionStrategy;
-    }
-
-    public function addModelDouble($modelClass, $doubleClass)
-    {
-        // TODO: Add Frontend Model Mocks
-        $this->markTestIncomplete();
     }
 
     public static function getSeleniumConfig($path)
@@ -100,16 +94,14 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
         } catch( Exception $e )
         {
 
-            if( in_array('--debug', $_SERVER['argv'] ) )
+            if( Xtest::getArg('debug') )
             {
 
                 echo PHP_EOL."got '".$e->getMessage()."' exception. press any key to continue..".PHP_EOL;
                 ob_end_flush();
 
                 fgets(STDIN);
-
             }
-
             throw $e;
         }
     }

@@ -115,8 +115,7 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
      */
     protected function allowExternal()
     {
-        $argv = $_SERVER['argv'];
-        return in_array('--external', $argv);
+        return Xtest::getArg('external');
     }
 
     protected function tearDown()
