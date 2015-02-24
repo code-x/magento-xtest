@@ -24,9 +24,18 @@ class Codex_Xtest_Xtest_Fixture_Customer extends Codex_Xtest_Xtest_Fixture_Abstr
 
         if ($cleanup) {
             // Testkunde löschen, dann neuen anlegen
+
             $customerCol = Mage::getModel('customer/customer')->getCollection();
             $customerCol->addFieldToFilter('email', $this->getEmail());
-            $customerCol->walk('delete');
+
+            foreach( $customerCol AS $tmpCustomer )
+            {
+                $orderCol = Mage::getModel('sales/order')->getCollection();
+                $orderCol->addFieldToFilter('customer_id', $tmpCustomer->getId());
+
+                $tmpCustomer->delete();
+            }
+
         } else {
             $customer->loadByEmail( $this->_email );
         }
