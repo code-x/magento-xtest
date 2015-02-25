@@ -4,6 +4,12 @@
 
     <default>
         <xtest>
+            <selenium>
+                <screenshot>
+                    <breakpoints>450x1024,1280x1024</breakpoints>
+                </screenshot>
+            </selenium>
+
             <fixtures>
 
                 <customer>

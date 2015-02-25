@@ -62,12 +62,14 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
             $title = $this->title();
         }
 
-        $this->resizeBrowserWindow(450,1024);
-        $this->takeScreenshot( $title.' w450' );
+        $sizes = Xtest::getArg('breakpoints', $this->getSeleniumConfig('screenshot/breakpoints') );
 
-        $this->resizeBrowserWindow(1280,1024);
-        $this->takeScreenshot( $title.' w1280' );
-
+        foreach( explode(',', $sizes) AS $size )
+        {
+            list($w,$h) = explode('x', $size);
+            $this->resizeBrowserWindow((int)$w,(int)$h);
+            $this->takeScreenshot( $title.' w'.$w );
+        }
     }
 
     /**
