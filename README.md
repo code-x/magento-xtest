@@ -5,6 +5,8 @@ Simple Magento Testing Framework.
 
 [![Build Status](https://travis-ci.org/code-x/Xtest.svg?branch=develop)](https://travis-ci.org/code-x/Xtest)
 
+---------------------------------------------------------------------------------
+
 ## General
 
 xtest is a test-suite which integrates PhpUnit into Magento. It is supporting basic unit testing and selenium testing.
@@ -63,31 +65,26 @@ We are provding two different Unit-Test classes. Please extend Codex\_Xtest\_Xte
 
 #### Codex\_Xtest\_Xtest\_Unit\_Abstract
 
-- dispatchUrl( $httpUrl, $postData = null )
-Dispatch a url
+- *dispatchUrl( $httpUrl, $postData = null )*: Dispatch a url
+- *dispatch($route, $params = array(), $postData = null)*: Dispatch a magento url
 
 - dispatch($route, $params = array(), $postData = null)
 Dispatch a magento url
 
 #### Codex\_Xtest\_Xtest\_Unit\_Frontend
 
-assertPaymentMethodIsAvailable
-- Checks if a payment method is available
-
-populuateQuote
-- Poplulates Magento Quote to all magento methods
-
-setCustomerAsLoggedIn
-- Sets customer as logged in 
+- *assertPaymentMethodIsAvailable*: Checks if a payment method is available
+- *populuateQuote*: Poplulates Magento Quote to all magento methods
+- *setCustomerAsLoggedIn*: Sets customer as logged in
 
 #### Codex\_Xtest\_Xtest\_Unit\_Admin
 
-Sets first Admin-User as logged in automatticly. 
+Sets first Admin-User as logged in automatically.
 
 ### Mocking
 
 Mocking models or helpers is a elementary feature to create tests.
-Normally you should test an explicit function and mock all other depending stuff to have reliable results.
+Normally you should test a explicit function and mock all other depending stuff to have reliable results.
 
 #### Model Mocking
 
