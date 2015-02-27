@@ -289,15 +289,17 @@ You could change all values by creating an own xtest.xml in your module and over
 
 #### Order / Quote
 
+This will create a basic test order.
+
 ```
 /** @var $orderFixture Codex_Xtest_Xtest_Fixture_Order */
 $orderFixture = Xtest::getXtest('xtest/fixture_order');
 $testOrder = $orderFixture->getTest();
 ```
 
-This creates a basic test order. 
-
 #### Customer
+
+This will create a test customer.
 
 ```
 /** @var $customerFixture Codex_Xtest_Xtest_Fixture_Customer */
@@ -305,11 +307,10 @@ $customerFixture = Xtest::getXtest('xtest/fixture_customer');
 $testCustomer = $customerFixture->getTest()
 ```
 
-This creates a test customer.
-
 ### Mail
 
-Xtest is not sending a mail. All mails a queued. You can read mail queue this way: 
+All mails during your work with Xtest are not beeing send; the are all queued and can be viewed for total control.
+You can access the mail queue this way:
 
 ```
 /** @var $mailqueue Codex_Xtest_Xtest_Helper_Mailqueue */
@@ -318,7 +319,7 @@ $mailqueue = Xtest::getXtest('xtest/helper_mailqueue');
 print_r( $mailqueue->getQueue() );
 ```         
 
-In addition we are providing some usefull assert:
+In addition Xtests provids some usefull asserts:
 - ```$this->assertMailTemplateIdSent( $yourTemplateId );```
 - ```$this->assertMailsSent( $yourMailsSentCount )```
 
@@ -358,7 +359,7 @@ class Codex_Demo_Model_DemoTest extends Codex_Xtest_Xtest_Unit_Frontend
 
 #### Render-HTML
 
-When selenium-server is running you could create screenshots of your html.
+When the selenium-server is running you have the option to take screenshots of the html. These screenshots are stored in png-format in a directory of your project.
 
 ```
 class Codex_Demo_Test_Selenium_HomepageTest extends Codex_Xtest_Xtest_Unit_Frontend {
@@ -370,7 +371,7 @@ class Codex_Demo_Test_Selenium_HomepageTest extends Codex_Xtest_Xtest_Unit_Front
 }
 ```
 
-This is quite cool to take screenshots from customer/account because you are able to mock some data:
+This is quite comfortable to take screenshots from customer/account because you are able to mock some data:
 
 ```
 class Codex_Demo_Test_Selenium_HomepageTest extends Codex_Xtest_Xtest_Unit_Frontend {
@@ -401,15 +402,15 @@ class Codex_Demo_Test_Selenium_HomepageTest extends Codex_Xtest_Xtest_Unit_Front
 }
 ```
 
-You could open screenshots (and tests results) by browsing to http://localhost/YourProject/htdocs/tests/view/
+You can view the screenshots (and test results) by browsing to http://localhost/YourProject/htdocs/tests/view/
 
 ## Selenium Tests
 
-All selenium tests a running against your current database. NOTHING could be reverted. You have to clean up data by yourself! (or you do not care about cleaning up..)
+All selenium tests a running against your current database. NOTHING can be reverted. You have to clean up data by yourself! (or you do not care about cleaning up)
 
 ### Using Selenium
 
-You have to start Selenium first. We provide all required files in app/tests/selenium - not the directory app of Magento but the directory app in xtest. Just run start.sh to start it.
+You have to start Selenium first. We provide all required files in app/tests/selenium. Not the directory app of Magento but the directory app in xtest. Just run start.sh to start it.
 
 ```
 cd htdocs/tests/selenium
@@ -419,7 +420,7 @@ cd htdocs/tests/selenium
 ### Page-Objects
 
 We are providing some basic page objects to simplify handling selenium tests.
-Let us start with some really crappy testing: onepage checkout progress.
+Let us start with some really tricky testing: onepage checkout progress.
 
 ```
 <?php
@@ -584,15 +585,15 @@ cd htdocs/tests/selenium
 ./start.sh 
 ```
 
-Now you can start it, jiha.
+Now you can start the test.
 
 ```
 cd htdocs/tests
 php phpunit.phar ../app/code/local/Codex/Demo/Test/Selenium/CheckoutTest.php --browser firefox --breakpoints 450x800,1280x1024
 ```
 
-Now tests is running using browser firefox and taking screenshots at a width of 450 and 1280px.
+Now all tests are running using firefox as browser and taking screenshots with a width of 450px and 1280px.
 
-Tipp: If you debugging tests you could use parameter --debug so browser window is not closing so fast :-)
+Tip: If you are debugging tests you could use parameter --debug so the browser window is not closing as fast as during the normal modus.
 
 
