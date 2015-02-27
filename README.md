@@ -582,7 +582,7 @@ cd htdocs/tests/selenium
 ./start.sh 
 ```
 
-Now you can start the test.
+Now you can start testing:
 
 ```
 cd htdocs/tests
