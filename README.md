@@ -167,7 +167,7 @@ class Codex_Demo_Test_Double_Model_Crazy extends Codex_Demo_Model_Crazy
 }
 ```
 
-xtest would use Codex\_Demo\_Test\_Double\_Model\_Crazy instead of Codex\_Demo\_Model\_Crazy. 
+xtest is going to use Codex\_Demo\_Test\_Double\_Model\_Crazy instead of Codex\_Demo\_Model\_Crazy.
 
 #### Block Mocking
 
