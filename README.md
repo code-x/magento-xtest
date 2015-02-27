@@ -589,7 +589,7 @@ cd htdocs/tests
 php phpunit.phar ../app/code/local/Codex/Demo/Test/Selenium/CheckoutTest.php --browser firefox --breakpoints 450x800,1280x1024
 ```
 
-Now all tests are running using firefox as browser and taking screenshots with a width of 450px and 1280px.
+Tests are running using firefox as browser and taking screenshots with a width of 450px and 1280px.
 
 Tip: If you are debugging tests you could use parameter --debug so the browser window is not closing as fast as during the normal modus.
 
