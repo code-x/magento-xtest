@@ -21,11 +21,13 @@ unit-tests are running on current database. All changes are running in transacti
 
 ### Get started
 
-To start testing create a test class in your custom module:
+To start testing create a test class in your custom module your currently working on. You just have to create a directory called 'Test'. For this test create a file 'DemoTest.php' with the following content:
 
-File: app/code/local/Codex/Test/Model/DemoTest.php
+File: app/code/local/Codex/Demo/Test/Model/DemoTest.php
 
 ```
+<?php
+
 class Codex_Demo_Test_Model_DemoTest extends Codex_Xtest_Xtest_Unit_Frontend
 {
 
@@ -33,7 +35,7 @@ class Codex_Demo_Test_Model_DemoTest extends Codex_Xtest_Xtest_Unit_Frontend
 	{
 		
 		$this->dispatch('/');
-		$this->assertContains('Hello World', $this->getResponseBody() )
+		$this->assertContains('Hello World', $this->getResponseBody() );
 	}
 
 }
@@ -47,6 +49,13 @@ php phpunit.phar ../app/code/local/Codex/Demo/Test/
 ```
 
 Congratulation! You have done your first unit-tests using xtest.
+
+You do not have to call a Test directly, without an certain filename in the shell all files in the directory are passed and the result printed on the screen. To call certain test-cases you simply have to add the filename:
+
+```
+cd htdocs/tests
+php phpunit.phar ../app/code/local/Codex/Demo/Test/DemoTest
+´´´
 
 ### Basic Test Classes
 
