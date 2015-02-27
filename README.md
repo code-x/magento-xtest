@@ -9,9 +9,9 @@ Simple Magento Testing Framework.
 
 ## General
 
-xtest is a test-suite which integrates PhpUnit into Magento. It is supporting basic unit testing and selenium testing.
+xtest is a test-suite that integrates PHPUnit into Magento. It supports basic unit testing as well as selenium testing.
 
-xtest is designed to create project integrations tests. instead of creating all entities we are using a preconfigured database. 
+xtest is designed to create integrations tests for projects. Instead of creating all entities we are using a preconfigured database. 
 
 ## Install
 
@@ -19,11 +19,11 @@ To Install xtest link all files to your magento installation. We are providing a
 
 ## Unit-Test
 
-unit-tests are running on current database. All changes are running in transactions so nothing may change your database. (except of MyISAM Tables which are not supporting database rollbacks)
+Unit tests run on the current database. All changes runs in transactions so nothing may change your database. (Except of MyISAM Tables which are not supporting database rollbacks)
 
 ### Get started
 
-To start testing create a test class in your custom module your currently working on. You just have to create a directory called 'Test'. For this test create a file 'DemoTest.php' with the following content:
+To start testing create a test class in your custom module your currently working on. You just have to create a directory called `Test`. Then create a file `DemoTest.php` with the following content:
 
 File: app/code/local/Codex/Demo/Test/Model/DemoTest.php
 
@@ -50,7 +50,7 @@ cd htdocs/tests
 php phpunit.phar ../app/code/local/Codex/Demo/Test/
 ```
 
-Congratulation! You have done your first unit-tests using xtest.
+Congratulations! You've just completed your first unit test using xtest.
 
 You do not have to call a test directly, without an certain filename in the shell all files in the directory are passed and the result printed on the screen. To call certain test-cases you simply have to add the filename:
 
@@ -61,7 +61,7 @@ php phpunit.phar ../app/code/local/Codex/Demo/Test/DemoTest
 
 ### Basic Test Classes
 
-We are provding two different Unit-Test classes. Please extend Codex\_Xtest\_Xtest\_Unit\_Frontend to create frontend tests and Codex\_Xtest\_Xtest\_Unit\_Admin to create tests concerning the magento backend.
+We are provding two different Unit-Test classes. Please extend `Codex\_Xtest\_Xtest\_Unit\_Frontend` to create frontend tests and `Codex\_Xtest\_Xtest\_Unit\_Admin` to create tests concerning the Magento backend.
 
 #### Codex\_Xtest\_Xtest\_Unit\_Abstract
 
