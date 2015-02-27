@@ -104,7 +104,7 @@ class Xtest
         return $this;
     }
 
-    public static function getArg($name, $default)
+    public static function getArg($name, $default=false)
     {
         if( self::$args === null )
         {
