@@ -5,6 +5,8 @@ Simple Magento Testing Framework.
 
 [![Build Status](https://travis-ci.org/code-x/Xtest.svg?branch=develop)](https://travis-ci.org/code-x/Xtest)
 
+---------------------------------------------------------------------------------
+
 ## General
 
 xtest is a test-suite which integrates PhpUnit into Magento. It is supporting basic unit testing and selenium testing.
