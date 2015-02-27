@@ -50,12 +50,12 @@ php phpunit.phar ../app/code/local/Codex/Demo/Test/
 
 Congratulation! You have done your first unit-tests using xtest.
 
-You do not have to call a Test directly, without an certain filename in the shell all files in the directory are passed and the result printed on the screen. To call certain test-cases you simply have to add the filename:
+You do not have to call a test directly, without an certain filename in the shell all files in the directory are passed and the result printed on the screen. To call certain test-cases you simply have to add the filename:
 
 ```
 cd htdocs/tests
 php phpunit.phar ../app/code/local/Codex/Demo/Test/DemoTest
-´´´
+```
 
 ### Basic Test Classes
 
@@ -303,6 +303,8 @@ $customerFixture = Xtest::getXtest('xtest/fixture_customer');
 $testCustomer = $customerFixture->getTest()
 ```
 
+This creates a test customer.
+
 ### Mail
 
 Xtest is not sending a mail. All mails a queued. You can read mail queue this way: 
@@ -401,21 +403,194 @@ You could open screenshots (and tests results) by browsing to http://localhost/Y
 
 ## Selenium Tests
 
-### Database
-- Will run on your current database
-- Would change database, tests have to cleanup database itself! (or don't care about it)
+All selenium tests a running against your current database. NOTHING could be reverted. You have to clean up data by yourself! (or you do not care about cleaning up..)
 
 ### Using Selenium
 
 You have to start Selenium first. We provide all required files in app/tests/selenium. Just run start.sh to start it. 
 
-### Using Page-Objects
+```
+cd htdocs/tests/selenium
+./start.sh
+```
 
-TODO: Add some stuff here
+### Page-Objects
 
-### Testing Frontend
+We are providing some basic page objects to simplify handling selenium tests.
+Let us start with some really crappy testing: onepage checkout progress.
 
-TODO: Add some stuff here
+```
+<?php
 
+class Codex_Demo_Test_Selenium_CheckoutTest extends Codex_Xtest_Xtest_Selenium_TestCase
+{
+
+	public function testOnepageCheckout()
+    {
+
+        $cartConfig = $this->getSeleniumConfig('checkout/addtocart');
+        foreach( $cartConfig AS $_productData )
+        {
+
+            /** @var $productPageObject Codex_Xtest_Xtest_Pageobject_Frontend_Product */
+            $productPageObject = $this->getPageObject('xtest/pageobject_frontend_product');
+
+            $productPageObject->openBySku( $_productData['sku'] );
+            $productPageObject->setQty( $_productData['qty'] );
+
+            $productPageObject->pressAddToCart();
+            $productPageObject->assertAddToCartMessageAppears();
+
+        }
+
+        /** @var $cartPageObject Codex_Xtest_Xtest_Pageobject_Frontend_Cart */
+        $cartPageObject = $this->getPageObject('xtest/pageobject_frontend_cart');
+        $cartPageObject->open();
+
+        $cartPageObject->takeResponsiveScreenshots('products in cart');
+
+        $this->assertEquals( count($cartConfig), count( $cartPageObject->getItems() ), 'cart is missing some items' );
+
+        $cartPageObject->clickProceedCheckout();
+        $this->assertContains('checkout/onepage/', $this->url() );
+
+        // ---
+
+        /** @var $checkoutPageObject Codex_Xtest_Xtest_Pageobject_Frontend_Checkout */
+        $checkoutPageObject = $this->getPageObject('xtest/pageobject_frontend_checkout');
+
+        $checkoutPageObject->takeResponsiveScreenshots('login');
+        $checkoutPageObject->login( self::$_customerEmail, self::$_customerPassword );
+        $checkoutPageObject->assertStepIsActive('billing');
+
+        // ---
+
+        $checkoutPageObject->setBillingAddress();
+        $checkoutPageObject->takeResponsiveScreenshots('billing address');
+        $checkoutPageObject->nextStep();
+
+        // ---
+
+        // TODO: Shipping Address
+
+        // ---
+
+        $checkoutPageObject->assertStepIsActive('shipping_method');
+        $checkoutPageObject->setShippingMethod();
+        $checkoutPageObject->takeResponsiveScreenshots('shipping method');
+        $checkoutPageObject->nextStep();
+
+        // ---
+
+        $checkoutPageObject->assertStepIsActive('payment');
+        $checkoutPageObject->setPaymentMethod();
+        $checkoutPageObject->takeResponsiveScreenshots('payment method');
+        $checkoutPageObject->nextStep();
+
+        // ---
+
+        $checkoutPageObject->assertStepIsActive('review');
+        $checkoutPageObject->acceptAgreements();
+        $checkoutPageObject->takeResponsiveScreenshots('review');
+        $checkoutPageObject->nextStep();
+
+        // ---
+
+        $checkoutPageObject->takeResponsiveScreenshots();
+        $checkoutPageObject->assertIsSuccessPage();
+
+    }  
+        
+} 
+
+``` 
+
+Before testing you have to extend your local xtest configuration with some test-data.
+
+```
+	[..]
+	<default>
+        <xtest>
+
+            <selenium>
+
+                <checkout>
+
+                    <customer>
+                        <email>devnull@code-x.de</email>
+                        <firstname>Vorname</firstname>
+                        <lastname>Nachname</lastname>
+                    </customer>
+
+                    <addtocart>
+
+                        <!--
+                        <product>
+                            <sku>test-01</sku>
+                            <qty>1</qty>
+                        </product>
+                        -->
+
+                    </addtocart>
+
+                    <billing_address>
+
+                        <firstname>test vornanme</firstname>
+                        <lastname>test name</lastname>
+                        <company>firma</company>
+                        <telephone>123456</telephone>
+                        <street1>Teststraße 32</street1>
+                        <city>Teststadt</city>
+                        <postcode>33100</postcode>
+                        <use_for_shipping_no>1</use_for_shipping_no>
+
+                    </billing_address>
+
+                    <shipping_address>
+
+                    </shipping_address>
+
+                    <shipping_method>
+                        <method>flatrate_flatrate</method>
+                    </shipping_method>
+
+                    <payment_method>
+                        <method>debit</method>
+
+                        <kontoinhaber>Inhaber Test</kontoinhaber>
+                        <swiftcode>switcode Test</swiftcode>
+                        <iban>Iban Test</iban>
+                    </payment_method>
+
+                </checkout>
+
+
+            </selenium>
+
+        </xtest>
+    </default>
+    [..]
+```
+    
+#### Start selenium testing
+
+We are providing a basic selenium set in tests/selenium.
+
+Start Selenium Server
+```
+cd htdocs/tests/selenium
+./start.sh 
+```
+
+Now you can start it, jiha.
+
+```
+cd htdocs/tests
+php phpunit.phar ../app/code/local/Codex/Demo/Test/Selenium/CheckoutTest.php --browser firefox --breakpoints 450x800,1280x1024
+```
+
+Now tests is running using browser firefox and taking screenshots at a width of 450 and 1280px.
+
+Tipp: If you debugging tests you could use parameter --debug so browser window is not closing so fast :-)
 
 
