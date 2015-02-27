@@ -159,14 +159,131 @@ class Codex_Demo_Test_Double_Model_Crazy extends Codex_Demo_Model_Crazy
 }
 ```
 
-xtest would use Codex_Demo_Test_Double_Model_Crazy instead of Codex_Demo_Model_Crazy. 
+xtest would use Codex\_Demo\_Test\_Double\_Model\_Crazy instead of Codex\_Demo\_Model\_Crazy. 
 
 #### Block Mocking
 
 Blocks should get all data from model(s) so you really don't want to mock them.
 
-#### Fixtures
+### Fixtures
 
+I don't like yaml. So we using magento classes to generate test data.
+Normally we are using preconfigured database so we do not have to create all our product-data before testing. 
+
+#### Configuration
+
+To set-up fixture configuration (e.g. product sku, e-mailadress, et.) see in app/code/community/Xtest/etc/xtest.xml
+
+```
+<config>
+    <default>
+        <xtest>
+            <selenium>
+                <screenshot>
+                    <breakpoints>450x1024,1280x1024</breakpoints>
+                </screenshot>
+            </selenium>
+
+            <fixtures>
+
+                <customer>
+                    <email>devnull@code-x.de</email>
+                    <firstname>Test Vorname</firstname>
+                    <lastname>Test Nachname</lastname>
+
+                    <billing_address>
+                        <firstname>Xtest Firstname</firstname>
+                        <lastname>Xtest Lastname</lastname>
+                        <street>Xtest Street</street>
+                        <city>Xtest City</city>
+                        <postcode>33100</postcode>
+                        <telephone>Xtest Phone</telephone>
+                        <country_id>DE</country_id>
+                        <region_id></region_id>
+                    </billing_address>
+
+                    <shipping_address>
+                        <firstname>Xtest Firstname</firstname>
+                        <lastname>Xtest Lastname</lastname>
+                        <street>Xtest Street</street>
+                        <city>Xtest City</city>
+                        <postcode>33100</postcode>
+                        <telephone>Xtest Phone</telephone>
+                        <country_id>DE</country_id>
+                        <region_id></region_id>
+                    </shipping_address>
+
+                </customer>
+
+                <order>
+
+                    <customer_id>0</customer_id>
+                    <customer_data>
+                        <email>devnull@code-x.de</email>
+                        <firstname>Test Vorname</firstname>
+                        <lastname>Test Nachname</lastname>
+                    </customer_data>
+
+                    <payment_method>
+                        <method>debit</method>
+                        <debit_cc_owner>Test</debit_cc_owner>
+                        <debit_iban>Test</debit_iban>
+                        <debit_swift>Test</debit_swift>
+                        <!-- some other options-->
+                    </payment_method>
+
+                    <shipping_method>
+                        <method>flatrate_flatrate</method>
+                    </shipping_method>
+
+                    <billing_address>
+                        <firstname>Xtest Firstname</firstname>
+                        <lastname>Xtest Lastname</lastname>
+                        <street>Xtest Street</street>
+                        <city>Xtest City</city>
+                        <postcode>33100</postcode>
+                        <telephone>Xtest Phone</telephone>
+                        <country_id>DE</country_id>
+                        <region_id></region_id>
+                    </billing_address>
+
+                    <shipping_address>
+                        <firstname>Xtest Firstname</firstname>
+                        <lastname>Xtest Lastname</lastname>
+                        <street>Xtest Street</street>
+                        <city>Xtest City</city>
+                        <postcode>33100</postcode>
+                        <telephone>Xtest Phone</telephone>
+                        <country_id>DE</country_id>
+                        <region_id></region_id>
+                    </shipping_address>
+
+                    <items>
+                        <!--
+                        <item>
+                            <qty>1</qty>
+                            <sku></sku>
+                        </item>
+                        -->
+                    </items>
+
+                </order>
+            </fixtures>
+        </xtest>
+    </default>
+</config>
+```
+
+You could change all values creating a own xtest.xml in your module and override our values with yours.  
+
+#### Order / Quote
+
+```
+/** @var $orderFixture Codex_Xtest_Xtest_Fixture_Order */
+$orderFixture = Xtest::getXtest('xtest/fixture_order');
+$testOrder = $orderFixture->getTest()
+```
+This creates a basic test order. 
 
 
 ## Selenium Tests
