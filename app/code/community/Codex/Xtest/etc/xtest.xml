@@ -25,7 +25,7 @@
                         <postcode>33100</postcode>
                         <telephone>Xtest Phone</telephone>
                         <country_id>DE</country_id>
-                        <region_id></region_id>
+                        <region_id>88</region_id>
                     </billing_address>
 
                     <shipping_address>
@@ -36,7 +36,7 @@
                         <postcode>33100</postcode>
                         <telephone>Xtest Phone</telephone>
                         <country_id>DE</country_id>
-                        <region_id></region_id>
+                        <region_id>88</region_id>
                     </shipping_address>
 
                 </customer>
@@ -51,7 +51,7 @@
                     </customer_data>
 
                     <payment_method>
-                        <method>debit</method>
+                        <method>cashondelivery</method>
                         <debit_cc_owner>Test</debit_cc_owner>
                         <debit_iban>Test</debit_iban>
                         <debit_swift>Test</debit_swift>
@@ -70,7 +70,7 @@
                         <postcode>33100</postcode>
                         <telephone>Xtest Phone</telephone>
                         <country_id>DE</country_id>
-                        <region_id></region_id>
+                        <region_id>88</region_id>
                     </billing_address>
 
                     <shipping_address>
@@ -81,7 +81,7 @@
                         <postcode>33100</postcode>
                         <telephone>Xtest Phone</telephone>
                         <country_id>DE</country_id>
-                        <region_id></region_id>
+                        <region_id>88</region_id>
                     </shipping_address>
 
                     <items>
