@@ -55,11 +55,10 @@ You do not have to call a Test directly, without an certain filename in the shel
 ```
 cd htdocs/tests
 php phpunit.phar ../app/code/local/Codex/Demo/Test/DemoTest
-´´´
-
+```
 ### Basic Test Classes
 
-We are provding too different Unit-Test classes. Please extend Codex\_Xtest\_Xtest\_Unit\_Frontend to create frontend tests and Codex\_Xtest\_Xtest\_Unit\_Admin. 
+We are provding two different Unit-Test classes. Please extend Codex\_Xtest\_Xtest\_Unit\_Frontend to create frontend tests and Codex\_Xtest\_Xtest\_Unit\_Admin to create tests concerning the magento backend.
 
 #### Codex\_Xtest\_Xtest\_Unit\_Abstract
 
@@ -87,7 +86,7 @@ Sets first Admin-User as logged in automatticly.
 ### Mocking
 
 Mocking models or helpers is a elementary feature to create tests.
-Normally you should test a explicit function and mock all other depending stuff to have reliable results.
+Normally you should test an explicit function and mock all other depending stuff to have reliable results.
 
 #### Model Mocking
 
@@ -111,39 +110,44 @@ class Codex_Demo_Test_Model_MockTest extends Codex_Xtest_Xtest_Unit_Frontend
 	 *
 	 * @dataProvider demoProvider
 	 **/
-	public function testDemoMock($userExistsInApi, $expectedUserExists)
-	{
-		$mock = $this->getMock('codex_api/service_customer', array('userExists') );
-		$mock->expects($this->any())
-			->method('userExists')
-			->willReturn( $userExistsInApi );
-		$this->addModelMock( 'codex_api/service_customer', $mock );
+	public function testDemoMock($productIsAvailable, $expectedAvailable)
+    {
+        $mock = $this->getModelMock('catalog/product', array('isAvailable') );
+        $mock->expects($this->any())
+            ->method('isAvailable')
+            ->willReturn( $productIsAvailable );
+        $this->addModelMock( 'catalog/product', $mock );
 
-		$api = Mage::getModel('codex_api/service_customer');
-		$this->assertEqual( $userExistsInApi, $expectedUserExists );
-	}
+        /** @var Mage_Catalog_Model_Product $product */
+        $product = Mage::getModel('catalog/product');
+        $this->assertEquals( $product->isAvailable(), $expectedAvailable );
+    }
 
 ```
 
-Normally you do not test your mocking results. that doesn't makes sense :)
+Normally you do not test your mocking results. that doesn't makes sense.
 
 #### Helper Mocking
 
 You could mock helper in same way
 
 ```
-$mock = $this->getHelperMock('codex_demo', array('getDemoMethod') );
-$mock->expects( $this->any() )
-    ->method( 'getDemoMethod' )
-    ->willReturn( 'some value' );
-$this->addHelperMock('codex_demo', $mock);
+	public function testDemoMock($productIsAvailable, $expectedAvailable)
+	{
+        $mock = $this->getHelperMock('codex_demo', array('getDemoMethod') );
+        $mock->expects( $this->any() )
+            ->method( 'getDemoMethod' )
+            ->willReturn( 'some value' );
+        $this->addHelperMock('codex_demo', $mock);
+    }
 ```
 
 Please consider you create a mock using $this->getHelperMock() and publish your mock using $this->addHelperMock().
 
-#### Permanet Mocking: Double
+#### Permanent Mocking: Double
 
-Sometimes you have a class which communicates to an external service. Something your class is doing really crazy stuff so you are not able to test other modules. In this case we could create a permanet mock.
+Sometimes you have a class which communicates to an external service, or something your class is doing really crazy stuff so you are not able to test other modules.
+In this case you could create a permanent mock.
 
 ```
 class Codex_Demo_Model_Crazy extends Varien_Object {
@@ -176,12 +180,12 @@ Blocks should get all data from model(s) so you really don't want to mock them.
 
 ### Fixtures
 
-I don't like yaml. So we using magento classes to generate test data.
-Normally we are using preconfigured database so we do not have to create all our product-data before testing. 
+We don't like yaml. So we using magento classes to generate test data.
+Normally we are using preconfigured databases so we do not have to create all our product-data before testing.
 
 #### Configuration
 
-To set-up fixture configuration (e.g. product sku, e-mailadress, et.) see in app/code/community/Xtest/etc/xtest.xml
+To set-up fixture configuration (e.g. product sku, e-mailadress, et.) see in app/code/community/Codex/Xtest/etc/xtest.xml
 
 ```
 <config>
@@ -283,7 +287,7 @@ To set-up fixture configuration (e.g. product sku, e-mailadress, et.) see in app
 </config>
 ```
 
-You could change all values creating a own xtest.xml in your module and override our values with yours.  
+You could change all values by creating an own xtest.xml in your module and override our values with yours.
 
 #### Order / Quote
 
@@ -303,7 +307,7 @@ This creates a basic test order.
 
 ### Using Selenium
 
-You have to start Selenium first. We provide all required files in app/tests/selenium. Just run start.sh to start it. 
+You have to start Selenium first. We provide all required files in app/tests/selenium - not the directory app of Magento but the directory app in xtest. Just run start.sh to start it.
 
 ### Using Page-Objects
 
