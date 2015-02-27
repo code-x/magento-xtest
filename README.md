@@ -1,7 +1,7 @@
 Xtest
 =====
 
-Simple Magento Testing Framework - still working on it. Do not use :-)
+Simple Magento Testing Framework.
 
 [![Build Status](https://travis-ci.org/code-x/Xtest.svg?branch=develop)](https://travis-ci.org/code-x/Xtest)
 
@@ -281,10 +281,114 @@ You could change all values creating a own xtest.xml in your module and override
 ```
 /** @var $orderFixture Codex_Xtest_Xtest_Fixture_Order */
 $orderFixture = Xtest::getXtest('xtest/fixture_order');
-$testOrder = $orderFixture->getTest()
+$testOrder = $orderFixture->getTest();
 ```
+
 This creates a basic test order. 
 
+#### Customer
+
+```
+/** @var $customerFixture Codex_Xtest_Xtest_Fixture_Customer */
+$customerFixture = Xtest::getXtest('xtest/fixture_customer');
+$testCustomer = $customerFixture->getTest()
+```
+
+### Mail
+
+Xtest is not sending a mail. All mails a queued. You can read mail queue this way: 
+
+```
+/** @var $mailqueue Codex_Xtest_Xtest_Helper_Mailqueue */
+$mailqueue = Xtest::getXtest('xtest/helper_mailqueue');
+
+print_r( $mailqueue->getQueue() );
+```         
+
+In addition we are providing some usefull assert:
+- ```$this->assertMailTemplateIdSent( $yourTemplateId );```
+- ```$this->assertMailsSent( $yourMailsSentCount )```
+
+### Examples
+
+#### Create Order, send order email and check if mail is sent
+
+```
+class Codex_Demo_Model_DemoTest extends Codex_Xtest_Xtest_Unit_Frontend
+{
+	public function testCreateOrderMail()
+	{
+		/** @var $orderFixture Codex_Xtest_Xtest_Fixture_Order */
+		$orderFixture = Xtest::getXtest('xtest/fixture_order');
+		$testOrder = $orderFixture->getTest();
+		
+		$testOrder->sendNewOrderEmail();
+		
+		$this->assertMailsSent( 1 );
+		$this->assertMailTemplateIdSent( 'sales_email_order_template' );
+	}
+}
+```
+
+#### Dispatch Route, check if layout is present
+
+```
+class Codex_Demo_Model_DemoTest extends Codex_Xtest_Xtest_Unit_Frontend
+{
+	public function testHomePageContainsNewProducts()
+	{
+		$this->dispatch('/');
+		$this->assertLayoutBlockExists('content');
+	}
+}
+```
+
+#### Render-HTML
+
+When selenium-server is running you could create screenshots of your html.
+
+```
+class Codex_Demo_Test_Selenium_HomepageTest extends Codex_Xtest_Xtest_Unit_Frontend {
+	public function testRenderHomepage()
+	{
+		$this->dispatch('/');
+		$this->renderHtml('homePage', $this->getResponseBody() );
+	}
+}
+```
+
+This is quite cool to take screenshots from customer/account because you are able to mock some data:
+
+```
+class Codex_Demo_Test_Selenium_HomepageTest extends Codex_Xtest_Xtest_Unit_Frontend {
+	public function testOrderHistory()
+    {
+        /** @var $customerFixture Codex_Xtest_Xtest_Fixture_Customer */
+        $customerFixture = Xtest::getXtest('xtest/fixture_customer');
+        $customer = $customerFixture->getTest();
+        $customer->setConfirmation(null);
+        $customer->save();
+
+        /** @var $orderFixture Codex_Xtest_Xtest_Fixture_Order */
+        $orderFixture = Xtest::getXtest('xtest/fixture_order');
+
+        $quote = $orderFixture->getFixtureQuote()->getTest( $customer );
+        $order = $orderFixture->convertQuoteToOrder( $quote );
+        $order->setState( current( Mage::getSingleton('sales/order_config')->getVisibleOnFrontStates() ) );
+        $order->save();
+
+        $this->setCustomerAsLoggedIn( $customer );
+
+        $this->dispatch('sales/order/history');
+        $this->renderHtml( 'account order history', $this->getResponseBody() );
+
+        $this->dispatch('sales/order/view/order_id/'.$order->getId());
+        $this->renderHtml( 'account order details', $this->getResponseBody() );
+    }
+}
+```
+
+You could open screenshots (and tests results) by browsing to http://localhost/YourProject/htdocs/tests/view/
 
 ## Selenium Tests
 
