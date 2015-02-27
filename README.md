@@ -93,7 +93,7 @@ Normally you should test an explicit function and mock all other depending stuff
 
 In this example we have a Model codex\_api/service\_customer which has a method userExists. This method returns true when a user exists in a different api, false when not.
 
-So, let us start mocking - jay! :-D
+So, let us start mocking.
 
 ```
 class Codex_Demo_Test_Model_MockTest extends Codex_Xtest_Xtest_Unit_Frontend
