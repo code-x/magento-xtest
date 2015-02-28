@@ -5,6 +5,8 @@ Simple Magento Testing Framework.
 
 [![Build Status](https://travis-ci.org/code-x/Xtest.svg?branch=develop)](https://travis-ci.org/code-x/Xtest)
 
+http://xtest-mage.com/
+
 ---------------------------------------------------------------------------------
 
 ## General
