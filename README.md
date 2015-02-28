@@ -576,22 +576,12 @@ Before testing you have to extend your local xtest configuration with some test-
     
 #### Start selenium testing
 
-We are providing a basic selenium set in tests/selenium.
-
-Start Selenium Server
-```
-cd htdocs/tests/selenium
-./start.sh 
-```
-
-Now you can start testing:
+To start testing using firefox und taking screenshots in a width of 450px and 1280px open a console and type:
 
 ```
 cd htdocs/tests
 php phpunit.phar ../app/code/local/Codex/Demo/Test/Selenium/CheckoutTest.php --browser firefox --breakpoints 450x800,1280x1024
 ```
-
-Tests are running using firefox as browser and taking screenshots with a width of 450px and 1280px.
 
 Tip: If you are debugging tests you could use parameter --debug so the browser window is not closing as fast as during the normal modus.
 
