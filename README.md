@@ -252,7 +252,7 @@ Normally you should test a explicit function and mock all other depending stuff 
 
 #### Model Mocking
 
-In this example we have a Model `catalog/product? which has a method isAvailable. This method returns true when product is available, false when not.
+In this example we have a Model `catalog/product` which has a method `isSaleable`. This method depends on `isAvailable` that returns true when product is available, false when not.
 
 So, let us start mocking.
 
@@ -271,10 +271,13 @@ class Codex_Demo_Test_Model_ProductTest extends Codex_Xtest_Xtest_Unit_Frontend
     }
 
     /**
+     * As catalog/product Model
+     * - when product is not available
+     * - then it should not be saleable
      *
      * @dataProvider demoProvider
      **/
-    public function testDemoMock($productIsAvailable, $expectedAvailable)
+    public function testDemoMock($productIsAvailable, $expectedSaleable)
     {
         $mock = $this->getModelMock('catalog/product', array('isAvailable') );
         $mock->expects($this->any())
@@ -284,7 +287,7 @@ class Codex_Demo_Test_Model_ProductTest extends Codex_Xtest_Xtest_Unit_Frontend
 
         /** @var Mage_Catalog_Model_Product $product */
         $product = Mage::getModel('catalog/product');
-        $this->assertEquals( $product->isAvailable(), $expectedAvailable );
+        $this->assertEquals( $product->isSalable(), $expectedSaleable );
     }
 
 }
@@ -405,32 +408,56 @@ In addition Xtest provids some usefull asserts:
 #### Create Order, send order email and check if mail is sent
 
 ```
-class Codex_Demo_Model_DemoTest extends Codex_Xtest_Xtest_Unit_Frontend
+<?php
+
+class Codex_Demo_Test_Integration_OrderTest extends Codex_Xtest_Xtest_Unit_Frontend
 {
-	public function testCreateOrderMail()
-	{
-		/** @var $orderFixture Codex_Xtest_Xtest_Fixture_Order */
-		$orderFixture = Xtest::getXtest('xtest/fixture_order');
-		$testOrder = $orderFixture->getTest();
-		
-		$testOrder->sendNewOrderEmail();
-		
-		$this->assertMailsSent( 1 );
-		$this->assertMailTemplateIdSent( 'sales_email_order_template' );
-	}
+
+    /**
+     * As Customer
+     * - when i plaved a order
+     * - then I should reveice a new order email
+     */
+    public function testOrderMail()
+    {
+        /** @var $orderFixture Codex_Xtest_Xtest_Fixture_Order */
+        $orderFixture = Xtest::getXtest('xtest/fixture_order');
+        $testOrder = $orderFixture->getTest();
+
+        $testOrder->sendNewOrderEmail();
+
+        $this->assertMailsSent( 1 );
+        $this->assertMailTemplateIdSent( 'sales_email_order_template' );
+    }
+
 }
 ```
 
 #### Dispatch Route, check if layout is present
 
 ```
-class Codex_Demo_Model_DemoTest extends Codex_Xtest_Xtest_Unit_Frontend
+<?php
+
+class Codex_Demo_Test_Controller_HomepageControllerTest extends Codex_Xtest_Xtest_Unit_Frontend
 {
-	public function testHomePageContainsNewProducts()
-	{
-		$this->dispatch('/');
-		$this->assertLayoutBlockExists('content');
-	}
+
+    /**
+     * As Customer
+     * - when I open Homepage
+     * - I should see "New Products"
+     */
+    public function testHomePageContainsNewProducts()
+    {
+        $this->dispatch('/');
+
+        // Checks Layout Wrapper exists
+        $this->assertLayoutBlockExists('cms.wrapper');
+
+        // Checks page contains some content
+        $this->assertContains('New Products', $this->getResponseBody() );
+
+    }
+
 }
 ```
 
@@ -520,12 +547,12 @@ class Codex_Demo_Test_Selenium_CheckoutTest extends Codex_Xtest_Xtest_Selenium_T
         $customerConfig = self::getSeleniumConfig('checkout/customer');
         self::$_customerEmail = $customerConfig['email'];
 
-        // Testkunde löschen, dann neuen anlegen
+        // Delete Testcustomer
         $customerCol = Mage::getModel('customer/customer')->getCollection();
         $customerCol->addFieldToFilter('email', self::$_customerEmail );
         $customerCol->walk('delete');
 
-        // Neuen Testkunden erstellen
+        // Create a new one
         $customer = Mage::getModel('customer/customer');
         $customer->setData($customerConfig);
         self::$_customerPassword = $customer->generatePassword();
