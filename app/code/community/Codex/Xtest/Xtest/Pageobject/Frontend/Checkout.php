@@ -45,7 +45,9 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Checkout extends Codex_Xtest_Xtest_P
         foreach( $data AS $key => $value )
         {
             if( $element = $this->byId('billing:'.$key) ) {
-                $element->value( $value );
+                if( $element->displayed() ) {
+                    $element->value( $value );
+                }
             }
         }
 
