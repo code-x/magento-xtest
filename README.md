@@ -25,7 +25,7 @@ Unit tests run on the current database. All changes runs in transactions so noth
 
 ### Get started
 
-*All samples are taken from https://github.com/code-x/xTest.Demo.*
+*All samples are taken from https://github.com/code-x/xTest.Demo. We also provide a demo video https://www.youtube.com/watch?v=rPyhS_neY6k*
 
 To start testing create a test class in your custom module your currently working on. You just have to create a directory called `Test`. Then create a file `HomepageControllerTest.php` with the following content:
 
