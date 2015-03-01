@@ -64,7 +64,7 @@ require __DIR__ . '/lib.php';
             <div class="col-md-6">
 
                 <select class="form-control" onchange="document.location.href=this.value;">
-                    <option value="#">Bitte wählen</option>
+                    <option value="#">Please select</option>
 
                     <?php $dirs = glob(get_behat_result_dir() . '/../*');
                     rsort($dirs); ?>
@@ -162,8 +162,8 @@ require __DIR__ . '/lib.php';
 
                                         <ul>
 
-                                            <li> <?php echo $_test->description; ?> </li>
-                                            <li> Dauer: <?php echo $_test->time ?> </li>
+                                            <li> <?php echo nl2br($_test->description); ?> </li>
+                                            <li> Time: <?php echo $_test->time ?> </li>
                                             <li> <?php echo $_test->exception; ?> </li>
 
                                             <?php if (count($_test->screenshots)) : ?>

@@ -61,21 +61,30 @@ class Codex_Xtest_Model_Phpunit_Listener implements PHPUnit_Framework_TestListen
 
     public function getDocComment(PHPUnit_Framework_Test $test)
     {
+        $comment = array();
+
         try {
             $class = new ReflectionClass($test);
             $method = $class->getMethod($test->getName(false));
             $docComment = $method->getDocComment();
-            $docComment = preg_replace('#[ \t]*(?:\/\*\*|\*\/|\*)?[ ]{0,1}(.*)?#', '$1', $docComment);
-            $docComment = "\n" . $docComment;
-            $endOfDescription = strpos($docComment, "\n@");
-            if ($endOfDescription !== false) {
-                $docComment = substr($docComment, 0, $endOfDescription);
+
+            $docComment = explode(PHP_EOL, $docComment);
+            foreach( $docComment AS $line )
+            {
+                $line = trim($line);
+                $line = trim($line, '*');
+                $line = trim($line);
+
+                if( substr($line,0, 1) != '@' && strlen($line) > 1 ) {
+                    $comment[] = $line;
+                }
             }
-            $docComment = trim($docComment);
+
         } catch (Exception $e) {
 
         }
-        return $docComment;
+
+        return join(PHP_EOL, $comment);
     }
 
     public function endTest(PHPUnit_Framework_Test $test, $time)
