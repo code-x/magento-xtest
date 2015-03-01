@@ -240,26 +240,38 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
 
     public function renderHtml( $name, $html )
     {
-        $fileName = uniqid().'.html';
-        $file = Mage::getBaseDir().'/'.$fileName;
+        $file = null;
 
-        file_put_contents( $file, $html );
+        try {
+            $fileName = uniqid().'.html';
+            $file = Mage::getBaseDir().'/'.$fileName;
 
-        $test = new Codex_Xtest_Xtest_Selenium_TestCase();
-        $test->run();
+            file_put_contents( $file, $html );
 
-        /** @var Codex_Xtest_Xtest_Pageobject_Abstract $page */
-        $page = $test->getPageObject('xtest/pageobject_abstract');
+            $test = new Codex_Xtest_Xtest_Selenium_TestCase();
+            $test->run();
 
-        $page->url( dirname(Mage::getBaseUrl('media')).'/'.$fileName );
-        $page->takeResponsiveScreenshots( $name );
+            /** @var Codex_Xtest_Xtest_Pageobject_Abstract $page */
+            $page = $test->getPageObject('xtest/pageobject_abstract');
 
-        foreach( $test->getScreenshots() AS $screen )
+            $page->url( dirname(Mage::getBaseUrl('media')).'/'.$fileName );
+            $page->takeResponsiveScreenshots( $name );
+
+            foreach( $test->getScreenshots() AS $screen )
+            {
+                $this->_screenshots[] = $screen;
+            }
+        } catch( Exception $e )
         {
-            $this->_screenshots[] = $screen;
+            if( $file && is_file($file) ) {
+                unlink($file);
+            }
+            throw $e;
         }
 
-        unlink($file);
+        if( $file && is_file($file) ) {
+            unlink($file);
+        }
     }
 
     public function getScreenshots()
