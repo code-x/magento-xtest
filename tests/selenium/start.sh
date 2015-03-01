@@ -6,6 +6,17 @@ echo ''
 echo ''
 echo ''
 
-java -jar selenium-server-standalone-2.*.jar
+if [ ! -f selenium-server-standalone.jar ]
+then
+    curl http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar > selenium-server-standalone.jar
+fi
 
+if [ ! -f chromedriver ]
+then
+    # TODO: Support other OS
+    curl http://chromedriver.storage.googleapis.com/2.14/chromedriver_mac32.zip > chromedriver.zip
+    unzip chromedriver.zip
+    rm chromedriver.zip
+fi
 
+java -jar selenium-server-standalone.jar
