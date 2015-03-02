@@ -48,7 +48,7 @@ class Codex_Demo_Test_Controller_HomepageControllerTest extends Codex_Xtest_Xtes
         $this->assertLayoutBlockExists('cms.wrapper');
 
         // Checks page contains some content
-        $this->assertContains('New Products', $this->getResponseBody() );
+        $this->assertContains('New Products', $this->getResponseBody());
 
     }
 
