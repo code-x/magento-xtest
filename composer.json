@@ -1,0 +1,44 @@
+{
+    "name": "code-x/Xtest",
+    "type": "magento-module",
+    "license": "MIT",
+    "description": "Simple Magento Testing Framework",
+    "homepage": "xtest-mage.com",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/code-x/Xtest.git"
+        }
+    ],
+    "keywords": [
+        "magento",
+        "extension",
+        "module"
+    ],
+    "authors":[
+        {
+            "name": "Tobias Vogt",
+            "email": "tobias@code-x.de",
+            "homepage": "http://code-x.de",
+            "role": "Developer"
+        },
+        {
+            "name": "Ingo Hillebrand",
+            "email": "ingo@code-x.de",
+            "homepage": "http://code-x.de",
+            "role": "Developer"
+        },
+        {
+            "name": "Matthias Kleine",
+            "email": "matthias@code-x.de",
+            "homepage": "http://code-x.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
