@@ -12,6 +12,9 @@
     ],
     "keywords": [
         "magento",
+        "test",
+        "development",
+        "ci",
         "extension",
         "module"
     ],
