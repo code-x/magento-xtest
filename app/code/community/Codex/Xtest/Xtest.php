@@ -20,7 +20,7 @@ class Xtest
     public static function initFrontend($code = null)
     {
         if ($code === null) {
-            $code = '';
+            $code = self::getArg('store_code', '');
         }
         self::init($code);
 
@@ -43,6 +43,10 @@ class Xtest
 
         Mage::reset();
         Mage::app($code, 'store', $options);
+
+        if ($disableDouble = (bool)self::getArg('disable_double', false)) {
+            self::getConfig()->setDisableDoubles($disableDouble);
+        }
     }
 
     /**

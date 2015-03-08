@@ -2,6 +2,7 @@
 
 class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
 {
+    protected $disableDoubles = false;
     protected $modelMocks = array();
     protected $helperMocks = array();
 
@@ -13,6 +14,8 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
         }
 
         $this->modelMocks[$modelClass] = $mockClassObj;
+
+        return $this;
     }
 
     public function addHelperMock($helperName, $mockClassObj)
@@ -26,6 +29,8 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
 
         // Remember helperMock for
         $this->helperMocks[] = $helperName;
+
+        return $this;
     }
 
     public function resetMocks()
@@ -43,6 +48,8 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
         }
 
         $this->helperMocks = array();
+
+        return $this;
     }
 
     public function getModelInstance($modelClass = '', $constructArguments = array())
@@ -52,10 +59,13 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
         }
 
         $modelName = $this->getModelClassName($modelClass);
-        $mockClassName = str_replace('_Model_', '_Test_Double_Model_', $modelName);
-        if (class_exists($mockClassName)) {
-            $obj = new $mockClassName($constructArguments);
-            return $obj;
+
+        if (!$this->getDisableDoubles()) {
+            $mockClassName = str_replace('_Model_', '_Test_Double_Model_', $modelName);
+            if (class_exists($mockClassName)) {
+                $obj = new $mockClassName($constructArguments);
+                return $obj;
+            }
         }
 
         if( $modelName == 'Mage_Core_Model_Resource' )
@@ -101,6 +111,8 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
         $registryKey = '_helper/' . $helperName;
         $this->unregisterHelper($helperName);
         Mage::register($registryKey, $mockClassObj);
+
+        return $this;
     }
 
     protected function unregisterHelper($helperName)
@@ -109,5 +121,24 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
         if (Mage::registry($registryKey)) {
             Mage::unregister($registryKey);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getDisableDoubles()
+    {
+        return $this->disableDoubles;
+    }
+
+    /**
+     * @param boolean $disableDoubles
+     */
+    public function setDisableDoubles($disableDoubles)
+    {
+        $this->disableDoubles = $disableDoubles;
+        return $this;
     }
 }
