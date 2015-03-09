@@ -1,9 +1,9 @@
 {
-    "name": "code-x/Xtest",
+    "name": "code-x/xtest",
     "type": "magento-module",
     "license": "MIT",
     "description": "Simple Magento Testing Framework",
-    "homepage": "xtest-mage.com",
+    "homepage": "http://xtest-mage.com",
     "repositories": [
         {
             "type": "git",
@@ -12,6 +12,9 @@
     ],
     "keywords": [
         "magento",
+        "test",
+        "development",
+        "ci",
         "extension",
         "module"
     ],
