@@ -10,11 +10,11 @@ class Xtest
         self::init('admin');
 
         Mage::getSingleton('core/translate')->setLocale(Mage::app()->getLocale()->getLocaleCode())->init(
-            'admin',
+            Mage_Core_Model_App_Area::AREA_ADMIN,
             true
         );
 
-        Mage::app()->loadArea( Mage_Core_Model_App_Area::AREA_ADMINHTML);
+        Mage::app()->loadArea(Mage_Core_Model_App_Area::AREA_ADMINHTML);
     }
 
     public static function initFrontend($code = null)
@@ -25,10 +25,10 @@ class Xtest
         self::init($code);
 
         Mage::register('isSecureArea', true, true);
-        Mage::app()->loadArea( Mage_Core_Model_App_Area::AREA_FRONTEND );
+        Mage::app()->loadArea(Mage_Core_Model_App_Area::AREA_FRONTEND);
 
         Mage::getSingleton('core/translate')->setLocale(Mage::app()->getLocale()->getLocaleCode())->init(
-            'frontend',
+            Mage_Core_Model_App_Area::AREA_FRONTEND,
             true
         );
     }
