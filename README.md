@@ -71,6 +71,18 @@ cd htdocs/tests
 php phpunit.phar ../app/code/local/Codex/Demo/Test/Controller/HomepageControllerTest.php
 ```
 
+### Parameter
+
+--store_code - store code thats bootet on frontend-tests
+--external -- run tests thats have an @external annotation also
+--disable_double - do not use double mocks
+
+#### Selenium based
+--browser - Sets Browser thats used in selenium tests (must be available)
+--breakpoints - define repsonsive breakpoints eg. "1024x800,1280x1024"
+--debug -- do not close browser window on exception
+
+
 ### Configuration
 
 To set-up fixture and selenium configuration (e.g. product sku, e-mailadress, etc) see in app/code/community/Codex/Xtest/etc/xtest.xml

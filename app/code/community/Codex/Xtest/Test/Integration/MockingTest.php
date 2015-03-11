@@ -1,7 +1,17 @@
 <?php
 
-class Codex_Xtest_Test_Integration_Mocking extends Codex_Xtest_Xtest_Unit_Frontend
+require_once  __DIR__.'/files/Test/Double/Catalog/Product.php';
+
+class Codex_Xtest_Test_Integration_MockingTest extends Codex_Xtest_Xtest_Unit_Frontend
 {
+
+    public function testDoubleParameter()
+    {
+        $this->assertEquals( 'Mage_Catalog_Test_Double_Model_Product', get_class(Mage::getModel('catalog/product') ) );
+
+        Xtest::getConfig()->setDisableDoubles(true);
+        $this->assertEquals( 'Mage_Catalog_Model_Product', get_class(Mage::getModel('catalog/product') ) );
+    }
 
     public function testModelMock()
     {
@@ -59,11 +69,6 @@ class Codex_Xtest_Test_Integration_Mocking extends Codex_Xtest_Xtest_Unit_Fronte
 
         $product = Mage::getSingleton('catalog/product');
         $this->assertEquals( 1000, $product->getId() );
-    }
-
-    public function testBlockMock()
-    {
-        $this->markTestIncomplete();
     }
 
 }
