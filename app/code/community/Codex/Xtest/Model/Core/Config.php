@@ -102,6 +102,7 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
     public function loadModules()
     {
         $res = parent::loadModules();
+        $this->loadModulesConfiguration('xtest.default.xml', $this);
         $this->loadModulesConfiguration('xtest.xml', $this);
         return $res;
     }
