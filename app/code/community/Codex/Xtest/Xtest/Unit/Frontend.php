@@ -41,6 +41,7 @@ class Codex_Xtest_Xtest_Unit_Frontend extends Codex_Xtest_Xtest_Unit_Abstract
         $quote = Mage::getModel('sales/quote')->load( $quote->getId() );
         Mage::getSingleton('checkout/cart')->setQuote( $quote );
         Mage::getSingleton('checkout/session')->setQuoteId( $quote->getId() );
+        Mage::getSingleton('checkout/type_onepage')->setQuote( $quote );
     }
 
     public function setCustomerAsLoggedIn($customer = null)
