@@ -83,7 +83,7 @@ require __DIR__ . '/lib.php';
 
                                         <li>
 
-                                            <h4 onclick="jQuery(this).parent().find('div').toggle()"><?php echo $title; ?></h4>
+                                            <h4 onclick="jQuery(this).parent().find('img').toggle()"><?php echo $title; ?></h4>
 
                                             <img class="img-thumbnail annotatable" title="<?php htmlentities($title); ?>"
                                                  src="images.php?file=<?php echo urlencode(
