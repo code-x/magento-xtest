@@ -84,12 +84,12 @@ require __DIR__ . '/lib.php';
 
                                         <li>
 
-                                            <h4><?php echo $title; ?></h4>
+                                            <h4 onclick="jQuery(this).parent().find('div').toggle()"><?php echo $title; ?></h4>
 
                                             <img class="img-thumbnail annotatable" title="<?php htmlentities($title); ?>"
                                                  src="images.php?file=<?php echo urlencode(
                                                      $img . '.png'
-                                                 ); ?>&time=<?php echo $_REQUEST['time']; ?>" ondblclick="if( jQuery(this).height() == '10' ) { jQuery(this).height('auto'); } else { jQuery(this).height('10px'); }" />
+                                                 ); ?>&time=<?php echo $_REQUEST['time']; ?>" />
                                         </li>
 
                                     <?php endforeach; ?>
