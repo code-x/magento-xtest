@@ -1,0 +1,23 @@
+.steps li {
+    padding-left: 3px;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+h4 {
+    page-break-before: always;
+}
+
+img {
+    max-width: 290mm !important;
+    max-height:150mm !important;
+    page-break-after:always;
+}
+
+@page {
+    size: A4;
+    margin: 15mm;
+}

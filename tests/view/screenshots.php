@@ -23,9 +23,6 @@ require __DIR__ . '/lib.php';
 
     <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 
-    <link type="text/css" rel="stylesheet" href="annotorious/annotorious.css" />
-    <script type="text/javascript" src="annotorious/annotorious.debug.js"></script>
-
     <style>
 
         .steps li {
@@ -52,6 +49,8 @@ require __DIR__ . '/lib.php';
         }
 
     </style>
+
+    <link rel="stylesheet" type="text/css" href="print.css" media="print" />
 
 </head>
 <body>
