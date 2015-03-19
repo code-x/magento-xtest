@@ -21,6 +21,11 @@ require __DIR__ . '/lib.php';
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="annotorious/annotorious.css" />
+    <script type="text/javascript" src="annotorious/annotorious.debug.js"></script>
+
     <style>
 
         .steps li {
@@ -81,10 +86,10 @@ require __DIR__ . '/lib.php';
 
                                             <h4><?php echo $title; ?></h4>
 
-                                            <img class="img-thumbnail" title="<?php htmlentities($title); ?>"
+                                            <img class="img-thumbnail annotatable" title="<?php htmlentities($title); ?>"
                                                  src="images.php?file=<?php echo urlencode(
                                                      $img . '.png'
-                                                 ); ?>&time=<?php echo $_REQUEST['time']; ?>"/>
+                                                 ); ?>&time=<?php echo $_REQUEST['time']; ?>" ondblclick="if( jQuery(this).height() == '10' ) { jQuery(this).height('auto'); } else { jQuery(this).height('10px'); }" />
                                         </li>
 
                                     <?php endforeach; ?>
