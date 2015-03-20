@@ -151,6 +151,8 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
 
     protected function _doDispatch( Codex_Xtest_Model_Core_Controller_Request_Http $request, $postData = null )
     {
+        Mage::app()->getStore()->setConfig('web/session/use_frontend_sid', true);
+
         if( $postData ) {
             $request->setMethod( self::METHOD_POST );
             if( !isset($postData['form_key']) ) {
@@ -238,7 +240,7 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $this->setExpectedException(get_class(Mage::exception($module)), $exceptionMessage, $exceptionCode);
     }
 
-    public function renderHtml( $name, $html )
+    public function renderHtml( $name, $html, $sleep = 0, $waitForAjax = true )
     {
         $file = null;
 
@@ -253,8 +255,14 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
 
             /** @var Codex_Xtest_Xtest_Pageobject_Abstract $page */
             $page = $test->getPageObject('xtest/pageobject_abstract');
-
             $page->url( dirname(Mage::getBaseUrl('media')).'/'.$fileName );
+
+            sleep( $sleep );
+            if( $waitForAjax )
+            {
+                $page->waitForAjax();
+            }
+
             $page->takeResponsiveScreenshots( $name );
 
             foreach( $test->getScreenshots() AS $screen )
