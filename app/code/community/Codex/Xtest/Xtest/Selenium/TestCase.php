@@ -1,5 +1,8 @@
 <?php
 
+define('BROWSERSTACK_USER', 'tobias63');
+define('BROWSERSTACK_KEY', 'i3495etfJwuPyuytYCwE');
+
 class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2TestCase
 {
     protected $_screenshots = array();
@@ -30,7 +33,43 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
         parent::setUp();
 
         $this->_screenshots = array();
-        $this->setBrowser( Xtest::getArg('browser', 'firefox') );
+
+        $browserName = Xtest::getArg('browser', 'firefox');
+        $browserData = Mage::getConfig()->getNode('default/xtest/selenium/browserlist/'.strtolower($browserName) );
+
+        if( $browserData ) {
+            $browserData = $browserData->asArray();
+
+            $capabilities = array();
+
+            if( $browserData['is_browserstack'] )
+            {
+                if( $browserstackConfig = Mage::getConfig()->getNode('default/xtest/selenium/browserstack') )
+                {
+                    $browserstackConfig = $browserstackConfig->asArray();
+
+                    $this->setHost( $browserstackConfig['host'] );
+                    $this->setPort( (int)$browserstackConfig['port'] );
+
+                    if( file_exists($browserstackConfig['authfile']) )
+                    {
+                        list($user,$key) = explode(':', file_get_contents($browserstackConfig['authfile']));
+                        $capabilities['browserstack.user'] = trim($user);
+                        $capabilities['browserstack.key'] = trim($key);
+                    }
+                }
+            }
+            $this->setBrowser( $browserData['name'] );
+
+            if( $caps = $browserData['capabilities'] ) {
+                $capabilities = array_merge( $capabilities, $caps );
+            }
+
+            $this->setDesiredCapabilities( $capabilities );
+
+        } else {
+            $this->setBrowser( $browserName );
+        }
         $this->setBrowserUrl(Mage::getBaseUrl());
 
         $this->setUpSessionStrategy(null);

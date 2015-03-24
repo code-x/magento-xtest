@@ -4,10 +4,92 @@
 
     <default>
         <xtest>
+
             <selenium>
                 <screenshot>
                     <breakpoints>450x1024,1280x1024</breakpoints>
                 </screenshot>
+
+                <browserstack>
+                    <host>hub.browserstack.com</host>
+                    <port>80</port>
+
+                    <authfile>/etc/browserstack</authfile>
+                </browserstack>
+
+                <browserlist>
+
+                    <firefox>
+                        <name>firefox</name>
+                        <is_browserstack>0</is_browserstack>
+                    </firefox>
+
+                    <bs_chrome>
+                        <name>Chrome</name>
+                        <capabilities>
+                            <os>Windows</os>
+                        </capabilities>
+                        <is_browserstack>1</is_browserstack>
+                    </bs_chrome>
+
+                    <bs_firefox>
+                        <name>Firefox</name>
+                        <capabilities>
+                            <os>Windows</os>
+                        </capabilities>
+                        <is_browserstack>1</is_browserstack>
+                    </bs_firefox>
+
+                    <bs_ie8>
+                        <name>IE</name>
+                        <capabilities>
+                            <browser_version>8.0</browser_version>
+                            <os>Windows</os>
+                            <os_version>7</os_version>
+                            <resolution>1280x1024</resolution>
+                            <requireWindowFocus>1</requireWindowFocus>
+                        </capabilities>
+                        <is_browserstack>1</is_browserstack>
+                    </bs_ie8>
+
+                    <bs_ie9>
+                        <name>IE</name>
+                        <capabilities>
+                            <browser_version>9.0</browser_version>
+                            <os>Windows</os>
+                            <os_version>7</os_version>
+                            <resolution>1280x1024</resolution>
+                            <requireWindowFocus>1</requireWindowFocus>
+                        </capabilities>
+                        <is_browserstack>1</is_browserstack>
+                    </bs_ie9>
+
+                    <bs_ie10>
+                        <name>IE</name>
+                        <capabilities>
+                            <browser_version>10.0</browser_version>
+                            <os>Windows</os>
+                            <os_version>7</os_version>
+                            <resolution>1280x1024</resolution>
+                            <requireWindowFocus>1</requireWindowFocus>
+                        </capabilities>
+                        <is_browserstack>1</is_browserstack>
+                    </bs_ie10>
+
+                    <bs_ie11>
+                        <name>IE</name>
+                        <capabilities>
+                            <browser_version>11.0</browser_version>
+                            <os>Windows</os>
+                            <os_version>7</os_version>
+                            <resolution>1280x1024</resolution>
+                            <requireWindowFocus>1</requireWindowFocus>
+                        </capabilities>
+                        <is_browserstack>1</is_browserstack>
+                    </bs_ie11>
+
+                </browserlist>
+
             </selenium>
 
             <fixtures>
