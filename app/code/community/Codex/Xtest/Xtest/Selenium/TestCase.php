@@ -1,8 +1,5 @@
 <?php
 
-define('BROWSERSTACK_USER', 'tobias63');
-define('BROWSERSTACK_KEY', 'i3495etfJwuPyuytYCwE');
-
 class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2TestCase
 {
     protected $_screenshots = array();
