@@ -7,6 +7,17 @@ class Codex_Xtest_Xtest_Fixture_Customer extends Codex_Xtest_Xtest_Fixture_Abstr
     protected $_email;
 
     /**
+     * Get Random Testcustomer
+     *
+     * @return Mage_Customer_Model_Customer
+     */
+    public function getTestRandom()
+    {
+        $this->setConfigFixture('customer/email', uniqid().'@test.code-x.de' );
+        return $this->getTest();
+    }
+
+    /**
      * @param bool $cleanup delete customer first
      */
     public function getTest($cleanup = true)
