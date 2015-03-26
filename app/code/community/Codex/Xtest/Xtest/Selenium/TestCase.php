@@ -71,9 +71,6 @@ class Codex_Xtest_Xtest_Selenium_TestCase extends PHPUnit_Extensions_Selenium2Te
 
         $this->setUpSessionStrategy(null);
 
-        // Default Browser-Size
-        $this->prepareSession()->currentWindow()->size(array('width' => 1280, 'height' => 1024));
-
         Xtest::initFrontend();
     }
 

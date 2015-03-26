@@ -41,7 +41,7 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
      * @param null $title
      * @return $this
      */
-    public function takeScreenshot( $title = null )
+    protected function _takeScreenshot( $title = null )
     {
         if( !$title ) {
             $title = $this->title();
@@ -52,6 +52,12 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         $this->getTestCase()->addScreenshot( $title, $this->currentScreenshot() );
 
         return $this;
+    }
+
+    public function takeScreenshot($title=null)
+    {
+        $this->resizeBrowserWindow(1280,1024);
+        $this->_takeScreenshot($title);
     }
 
     /**
@@ -69,7 +75,7 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
         {
             list($w,$h) = explode('x', $size);
             $this->resizeBrowserWindow((int)$w,(int)$h);
-            $this->takeScreenshot( $title.' w'.$w );
+            $this->_takeScreenshot( $title.' w'.$w );
         }
     }
 
