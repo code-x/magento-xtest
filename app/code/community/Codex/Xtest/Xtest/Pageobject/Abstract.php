@@ -47,7 +47,8 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
             $title = $this->title();
         }
 
-        $title .= ' using '.$this->getBrowser();
+        $caps = $this->getDesiredCapabilities();
+        $title .= ' using '.$this->getBrowser()." ".$caps['version'];
         $this->getTestCase()->addScreenshot( $title, $this->currentScreenshot() );
 
         return $this;
