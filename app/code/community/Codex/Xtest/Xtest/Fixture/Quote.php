@@ -12,6 +12,11 @@ class Codex_Xtest_Xtest_Fixture_Quote extends Codex_Xtest_Xtest_Fixture_Abstract
 
     public function getTest( $customer = null )
     {
+
+        $appEmulation = Mage::getSingleton('core/app_emulation');
+        $firstStore = current( Mage::app()->getStores() );
+        $initialEnvironmentInfo = $appEmulation->startEnvironmentEmulation( $firstStore->getId() );
+
         /* @var $quote Mage_Sales_Model_Quote */
         $quote = Mage::getModel('sales/quote')->setStoreId(Mage::app()->getStore()->getId());
 
@@ -53,8 +58,10 @@ class Codex_Xtest_Xtest_Fixture_Quote extends Codex_Xtest_Xtest_Fixture_Abstract
 
         $quote->getShippingAddress()
             ->setCollectShippingRates(true)
-            ->setShippingMethod( $this->getConfigFixture('order/shipping_method/method') )
-            ->setPaymentMethod( $this->getConfigFixture('order/payment_method/method') );
+            ->setShippingMethod( $this->getConfigFixture('order/shipping_method/method') );
+
+        $quote->getShippingAddress()
+             ->setPaymentMethod( $this->getConfigFixture('order/payment_method/method') );
 
         if( $importData = $this->getConfigFixture('order/payment_method') )
         {
@@ -62,6 +69,8 @@ class Codex_Xtest_Xtest_Fixture_Quote extends Codex_Xtest_Xtest_Fixture_Abstract
         }
 
         $quote->collectTotals()->save();
+
+        $appEmulation->stopEnvironmentEmulation($initialEnvironmentInfo);
 
         return $quote;
     }
