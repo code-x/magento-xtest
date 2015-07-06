@@ -53,6 +53,8 @@ class Codex_Xtest_Xtest_Unit_Frontend extends Codex_Xtest_Xtest_Unit_Abstract
             $customer = $customerFixture->getTest();
             $customer->setConfirmation(null);
             $customer->save();
+
+            Mage::dispatchEvent('xtest_fixture_customer_create', array( 'customer' => $customer ) );
         }
 
         Mage::getSingleton('customer/session')->setCustomer($customer);
