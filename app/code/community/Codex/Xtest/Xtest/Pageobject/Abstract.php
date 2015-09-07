@@ -216,14 +216,14 @@ class Codex_Xtest_Xtest_Pageobject_Abstract extends PHPUnit_Extensions_Selenium2
                     $activeConnections = 0;
                     $activeConnections += (int)$this->execute(
                         array(
-                            'script' => 'return jQuery.active',
+                            'script' => 'return ( jQuery ? jQuery.active : 0 )',
                             'args'   => array()
                         )
                     );
 
                     $activeConnections += (int)$this->execute(
                         array(
-                            'script' => 'return Ajax.activeRequestCount',
+                            'script' => 'return ( Ajax ? Ajax.activeRequestCount : 0)',
                             'args'   => array()
                         )
                     );
