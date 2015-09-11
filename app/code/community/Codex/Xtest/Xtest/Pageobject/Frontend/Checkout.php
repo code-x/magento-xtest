@@ -35,8 +35,37 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Checkout extends Codex_Xtest_Xtest_P
         return substr($active->attribute('id'), 4);
     }
 
+    public function setShippingAddress( $data = null )
+    {
+        if( $this->byId('shipping-address-select') ) {
+            $this->select( $this->byId('shipping-address-select') )->selectOptionByValue("");
+        }
+
+        if( $data === null )
+        {
+            $data = $this->getSeleniumConfig('checkout/shipping_address');
+        }
+
+        foreach ($data AS $key => $value) {
+            try {
+                if ($element = $this->byId('shipping:' . $key)) {
+                    if ($element->displayed()) {
+                        $element->value($value);
+                    }
+                }
+            } catch (Exception $e) {
+
+            }
+        }
+
+    }
+
     public function setBillingAddress( $data = null )
     {
+        if( $this->byId('billing-address-select') ) {
+            $this->select( $this->byId('billing-address-select') )->selectOptionByValue("");
+        }
+
         if( $data === null )
         {
             $data = $this->getSeleniumConfig('checkout/billing_address');
