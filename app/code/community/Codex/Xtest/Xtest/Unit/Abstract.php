@@ -240,7 +240,7 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $this->setExpectedException(get_class(Mage::exception($module)), $exceptionMessage, $exceptionCode);
     }
 
-    public function renderHtml( $name, $html, $sleep = 0, $waitForAjax = true )
+    public function renderHtml( $name, $html, $sleep = 0, $waitForAjax = false )
     {
         $file = null;
 
