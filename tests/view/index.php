@@ -118,7 +118,7 @@ require __DIR__ . '/lib.php';
                             onclick="jQuery(this).parent().children('ul').toggle(); ">
                             <?php echo $suiteName; ?>
 
-                            <?php foreach ($testClass->tags AS $tag) : ?>
+                            <?php if (isset($testClass->tags)) foreach ($testClass->tags AS $tag) : ?>
 
                                 <span class="badge badge-default">
                                         <?php echo $tag; ?>
@@ -143,7 +143,7 @@ require __DIR__ . '/lib.php';
                                             <?php echo $_test->testName; ?>
 
 
-                                            <?php foreach ($_test->tags AS $tag) : ?>
+                                            <?php if (isset($_test->tags)) foreach ($_test->tags AS $tag) : ?>
 
                                                 <span class="badge badge-default">
                                                         @<?php echo $tag; ?>

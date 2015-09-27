@@ -103,7 +103,7 @@ class Codex_Xtest_Model_Phpunit_Listener implements PHPUnit_Framework_TestListen
         $result = array(
             'testName' => $testName,
             'time' => $time,
-            'exception' => $this->lastResult,
+            'exception' => (string) $this->lastResult,
             'status' => $this->lastStatus,
             'description' => $this->getDocComment($test),
             'screenshots' => array()

@@ -25,6 +25,12 @@ class Xtest
         self::init($code);
 
         Mage::register('isSecureArea', true, true);
+
+        if (Mage::getStoreConfig('xtext/force/index') )
+        {
+          Mage::register('custom_entry_point', true, true);
+        }
+
         Mage::app()->loadArea(Mage_Core_Model_App_Area::AREA_FRONTEND);
 
         Mage::getSingleton('core/translate')->setLocale(Mage::app()->getLocale()->getLocaleCode())->init(
