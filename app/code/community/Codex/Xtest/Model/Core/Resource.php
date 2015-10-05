@@ -49,7 +49,7 @@ class Codex_Xtest_Model_Core_Resource extends Mage_Core_Model_Resource
             return $connection;
         }
 
-        return parent::getConnection('default_setup');
+        return parent::getConnection($name);
     }
 
 }
