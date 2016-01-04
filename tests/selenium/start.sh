@@ -8,7 +8,7 @@ echo ''
 
 if [ ! -f selenium-server-standalone.jar ]
 then
-    curl http://selenium-release.storage.googleapis.com/2.45/selenium-server-standalone-2.45.0.jar > selenium-server-standalone.jar
+    curl http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.2.jar > selenium-server-standalone.jar
 fi
 
 if [ ! -f chromedriver ]
