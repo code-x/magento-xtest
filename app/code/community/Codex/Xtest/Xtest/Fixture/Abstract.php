@@ -7,7 +7,7 @@ abstract class Codex_Xtest_Xtest_Fixture_Abstract
 
     public function getConfigFixture($pPath)
     {
-        if( $this->_config[ $pPath ] !== null ) {
+        if( isset($this->_config[ $pPath ]) && $this->_config[ $pPath ] !== null ) {
             return $this->_config[ $pPath ];
         }
 

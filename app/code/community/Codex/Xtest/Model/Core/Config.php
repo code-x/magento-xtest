@@ -54,7 +54,7 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
 
     public function getModelInstance($modelClass = '', $constructArguments = array())
     {
-        if ($classObj = $this->modelMocks[$modelClass]) {
+        if (isset($this->modelMocks[$modelClass]) && $classObj = $this->modelMocks[$modelClass]) {
             return clone $classObj;
         }
 

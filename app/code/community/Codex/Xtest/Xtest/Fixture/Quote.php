@@ -42,7 +42,7 @@ class Codex_Xtest_Xtest_Fixture_Quote extends Codex_Xtest_Xtest_Fixture_Abstract
             /* @var $product Mage_Catalog_Model_Product */
             $product = Mage::getModel('catalog/product');
 
-            if( $item['product_id'] ) {
+            if( isset($item['product_id']) && $item['product_id'] ) {
                 $product->load( $item['product_id'] );
             } elseif( $item['sku'] ) {
                 $product->load( $product->getIdBySku( $item['sku'] ) );
