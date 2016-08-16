@@ -2,28 +2,25 @@
 
 abstract class Codex_Xtest_Xtest_Fixture_Abstract
 {
-
     protected $_config = array();
 
     public function getConfigFixture($pPath)
     {
-        if( $this->_config[ $pPath ] !== null ) {
-            return $this->_config[ $pPath ];
+        if ($this->_config[$pPath] !== null) {
+            return $this->_config[$pPath];
         }
 
-        $path = 'xtest/fixtures/'.$pPath;
+        $path = 'xtest/fixtures/' . $pPath;
 
         $config = Mage::getStoreConfig($path);
-        if( $config === NULL ) {
-            Mage::throwException( sprintf('Config path %s is null', $path) );
+        if ($config === null) {
+            Mage::throwException(sprintf('Config path %s is null', $path));
         }
 
-        if( is_array( $config ) )
-        {
+        if (is_array($config)) {
             $tmp = array();
-            foreach( $config AS $k => $v )
-            {
-                $tmp[ $k ] = $this->getConfigFixture($pPath.'/'.$k);
+            foreach ($config AS $k => $v) {
+                $tmp[$k] = $this->getConfigFixture($pPath . '/' . $k);
             }
             return $tmp;
         }
@@ -33,8 +30,7 @@ abstract class Codex_Xtest_Xtest_Fixture_Abstract
 
     public function setConfigFixture($path, $value)
     {
-        $this->_config[ $path ] = $value;
+        $this->_config[$path] = $value;
         return $this;
     }
-
 }

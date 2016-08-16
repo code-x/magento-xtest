@@ -2,11 +2,10 @@
 
 class Codex_Xtest_Xtest_Pageobject_Frontend_Customer extends Codex_Xtest_Xtest_Pageobject_Abstract
 {
-
     public function open()
     {
         $url = Mage::getUrl('customer/account');
-        if ( $url != $this->url() ) {
+        if ($url != $this->url()) {
             $this->url($url);
         }
     }
@@ -44,7 +43,4 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Customer extends Codex_Xtest_Xtest_P
     {
         return $this->byCssSelector('li.success-msg')->text();
     }
-
-
-
 }

@@ -68,8 +68,7 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
             }
         }
 
-        if( $modelName == 'Mage_Core_Model_Resource' )
-        {
+        if ($modelName == 'Mage_Core_Model_Resource') {
             $obj = new Codex_Xtest_Model_Core_Resource($constructArguments);
             return $obj;
         }
@@ -127,7 +126,7 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getDisableDoubles()
     {
@@ -135,7 +134,8 @@ class Codex_Xtest_Model_Core_Config extends Mage_Core_Model_Config
     }
 
     /**
-     * @param boolean $disableDoubles
+     * @param $disableDoubles bool
+     * @return $this
      */
     public function setDisableDoubles($disableDoubles)
     {

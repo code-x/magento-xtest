@@ -2,7 +2,6 @@
 
 class Codex_Xtest_Test_Helper_MailqueueTest extends Codex_Xtest_Xtest_Unit_Frontend
 {
-
     /**
      * Do not sending Mails, Queue them instead
      */
@@ -14,7 +13,7 @@ class Codex_Xtest_Test_Helper_MailqueueTest extends Codex_Xtest_Xtest_Unit_Front
         $customer = $customerFixture->getTest();
 
         $customer->sendNewAccountEmail();
-        $this->assertMailsSent( 1 );
+        $this->assertMailsSent(1);
     }
 
     /**
@@ -30,7 +29,7 @@ class Codex_Xtest_Test_Helper_MailqueueTest extends Codex_Xtest_Xtest_Unit_Front
      */
     public function testThrowExceptionBecauseEmptyRecipient()
     {
-        $this->setExpectedMageException('Codex_Xtest', Codex_Xtest_Exception::EMPTY_MAIL_RECIPIENT );
+        $this->setExpectedMageException('Codex_Xtest', Codex_Xtest_Exception::EMPTY_MAIL_RECIPIENT);
 
         $customerFixture = Xtest::getXtest('xtest/fixture_customer');
 
@@ -40,5 +39,4 @@ class Codex_Xtest_Test_Helper_MailqueueTest extends Codex_Xtest_Xtest_Unit_Front
 
         $customer->sendNewAccountEmail();
     }
-
 }

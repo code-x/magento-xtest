@@ -12,8 +12,7 @@ class Codex_Xtest_Xtest_Unit_Admin extends Codex_Xtest_Xtest_Unit_Abstract
     {
         Mage::app()->getStore()->setConfig("admin/security/use_form_key", 0);
 
-        if( !$adminuser )
-        {
+        if (!$adminuser) {
             $adminusers = Mage::getModel('admin/user')->getCollection();
             if ($adminusers->getSize() >= 1) {
                 $adminuser = $adminusers->getFirstItem();
@@ -25,5 +24,4 @@ class Codex_Xtest_Xtest_Unit_Admin extends Codex_Xtest_Xtest_Unit_Abstract
 
         parent::_doDispatch($request, $postData);
     }
-
 }

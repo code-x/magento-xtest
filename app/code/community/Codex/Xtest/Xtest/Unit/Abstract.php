@@ -4,12 +4,10 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
 {
     const METHOD_GET = 'GET';
     const METHOD_POST = 'POST';
-
     /**
      * @var Mage_Core_Model_Resource
      */
     protected $_transaction;
-
     protected $_screenshots;
 
     public function addModelMock($modelClass, $mockClassObj)
@@ -129,14 +127,14 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $db->rollBack();
     }
 
-    public function dispatchUrl( $httpUrl, $postData = null )
+    public function dispatchUrl($httpUrl, $postData = null)
     {
         $request = new Codex_Xtest_Model_Core_Controller_Request_Http();
-        $request->setBaseUrl( Mage::getBaseUrl('web', true) );
-        $request->setRequestUri( $httpUrl );
+        $request->setBaseUrl(Mage::getBaseUrl('web', true));
+        $request->setRequestUri($httpUrl);
         $request->setPathInfo();
 
-        $this->_doDispatch( $request, $postData );
+        $this->_doDispatch($request, $postData);
     }
 
     public function dispatch($route, $params = array(), $postData = null)
@@ -146,19 +144,19 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $request->setParams($params);
         $request->setParam('nocookie', true);
 
-        $this->_doDispatch( $request, $postData );
+        $this->_doDispatch($request, $postData);
     }
 
-    protected function _doDispatch( Codex_Xtest_Model_Core_Controller_Request_Http $request, $postData = null )
+    protected function _doDispatch(Codex_Xtest_Model_Core_Controller_Request_Http $request, $postData = null)
     {
         Mage::app()->getStore()->setConfig('web/session/use_frontend_sid', true);
 
-        if( $postData ) {
-            $request->setMethod( self::METHOD_POST );
-            if( !isset($postData['form_key']) ) {
+        if ($postData) {
+            $request->setMethod(self::METHOD_POST);
+            if (!isset($postData['form_key'])) {
                 $postData['form_key'] = Mage::getSingleton('core/session')->getFormKey();
             }
-            $request->setPost( $postData );
+            $request->setPost($postData);
         }
 
         Mage::$headersSentThrowsException = false;
@@ -168,10 +166,8 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $dispatcher->setRouter(Mage::app()->getFrontController()->getRouters());
         $dispatcher->dispatch();
 
-        foreach( $dispatcher->getResponse()->getHeaders() AS $header )
-        {
-            if( $header['value'] == '404 Not Found' )
-            {
+        foreach ($dispatcher->getResponse()->getHeaders() AS $header) {
+            if ($header['value'] == '404 Not Found') {
                 Mage::throwException('404');
             }
         }
@@ -179,15 +175,13 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
 
     public function getResponseBody()
     {
-        return trim( Mage::app()->getResponse()->getBody() );
+        return trim(Mage::app()->getResponse()->getBody());
     }
 
     public function getRedirectLocation()
     {
-        foreach( Mage::app()->getResponse()->getHeaders() AS $header )
-        {
-            if( strtolower($header['name']) == 'location' )
-            {
+        foreach (Mage::app()->getResponse()->getHeaders() AS $header) {
+            if (strtolower($header['name']) == 'location') {
                 return $header['value'];
             }
         }
@@ -205,34 +199,33 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
     public function assertLayoutBlockNotExists($nameInLayout)
     {
         $block = $this->getLayout()->getBlock($nameInLayout);
-        $this->assertFalse( (bool)$block, "Block $nameInLayout not found" );
+        $this->assertFalse((bool)$block, "Block $nameInLayout not found");
     }
 
     public function assertLayoutBlockExists($nameInLayout)
     {
         $block = $this->getLayout()->getBlock($nameInLayout);
-        $this->assertNotFalse( $block, "Block $nameInLayout not found" );
+        $this->assertNotFalse($block, "Block $nameInLayout not found");
     }
 
-    protected function assertMailsSent( $expectedMailCnt )
+    protected function assertMailsSent($expectedMailCnt)
     {
         /** @var $mailqueue Codex_Xtest_Xtest_Helper_Mailqueue */
         $mailqueue = Xtest::getXtest('xtest/helper_mailqueue');
-        $this->assertEquals($expectedMailCnt , $mailqueue->getCount(), 'wrong mailcount' );
+        $this->assertEquals($expectedMailCnt, $mailqueue->getCount(), 'wrong mailcount');
     }
 
-    protected function assertMailTemplateIdSent( $templateId )
+    protected function assertMailTemplateIdSent($templateId)
     {
         /** @var $mailqueue Codex_Xtest_Xtest_Helper_Mailqueue */
         $mailqueue = Xtest::getXtest('xtest/helper_mailqueue');
 
         $templateIds = array();
-        foreach( $mailqueue->getQueue() AS $queueItem )
-        {
+        foreach ($mailqueue->getQueue() AS $queueItem) {
             $templateIds[] = $queueItem['object']->getId();
         }
 
-        $this->assertTrue( in_array($templateId, $templateIds), "$templateId is not send: ".join(',', $templateIds) );
+        $this->assertTrue(in_array($templateId, $templateIds), "$templateId is not send: " . join(',', $templateIds));
     }
 
     public function setExpectedMageException($module, $exceptionMessage = '', $exceptionCode = null)
@@ -240,44 +233,41 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
         $this->setExpectedException(get_class(Mage::exception($module)), $exceptionMessage, $exceptionCode);
     }
 
-    public function renderHtml( $name, $html, $sleep = 0, $waitForAjax = false )
+    public function renderHtml($name, $html, $sleep = 0, $waitForAjax = false)
     {
         $file = null;
 
         try {
-            $fileName = uniqid().'.html';
-            $file = Mage::getBaseDir().'/'.$fileName;
+            $fileName = uniqid() . '.html';
+            $file = Mage::getBaseDir() . '/' . $fileName;
 
-            file_put_contents( $file, $html );
+            file_put_contents($file, $html);
 
             $test = new Codex_Xtest_Xtest_Selenium_TestCase();
             $test->run();
 
             /** @var Codex_Xtest_Xtest_Pageobject_Abstract $page */
             $page = $test->getPageObject('xtest/pageobject_abstract');
-            $page->url( dirname(Mage::getBaseUrl('media')).'/'.$fileName );
+            $page->url(dirname(Mage::getBaseUrl('media')) . '/' . $fileName);
 
-            sleep( $sleep );
-            if( $waitForAjax )
-            {
+            sleep($sleep);
+            if ($waitForAjax) {
                 $page->waitForAjax();
             }
 
-            $page->takeResponsiveScreenshots( $name );
+            $page->takeResponsiveScreenshots($name);
 
-            foreach( $test->getScreenshots() AS $screen )
-            {
+            foreach ($test->getScreenshots() AS $screen) {
                 $this->_screenshots[] = $screen;
             }
-        } catch( Exception $e )
-        {
-            if( $file && is_file($file) ) {
+        } catch (Exception $e) {
+            if ($file && is_file($file)) {
                 unlink($file);
             }
             throw $e;
         }
 
-        if( $file && is_file($file) ) {
+        if ($file && is_file($file)) {
             unlink($file);
         }
     }
@@ -286,5 +276,4 @@ class Codex_Xtest_Xtest_Unit_Abstract extends PHPUnit_Framework_TestCase
     {
         return $this->_screenshots;
     }
-
 }

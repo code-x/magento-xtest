@@ -59,46 +59,48 @@ class Codex_Xtest_Model_Phpunit_Session_Pageobject
     private $original;
     static private $session;
     static private $mainWindow;
-    private $lastTestWasNotSuccessful = FALSE;
+    private $lastTestWasNotSuccessful = false;
 
     public function session(array $parameters)
     {
         if ($this->lastTestWasNotSuccessful) {
-            if (self::$session !== NULL) {
+            if (self::$session !== null) {
                 self::$session->stop();
-                self::$session = NULL;
+                self::$session = null;
             }
-            $this->lastTestWasNotSuccessful = FALSE;
+
+            $this->lastTestWasNotSuccessful = false;
         }
-        if (self::$session === NULL) {
-            if( !$this->original )
-            {
+
+        if (self::$session === null) {
+            if (!$this->original) {
                 $this->original = new PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated();
             }
+
             self::$session = $this->original->session($parameters);
             self::$mainWindow = self::$session->windowHandle();
         } else {
             self::$session->window(self::$mainWindow);
         }
+
         return self::$session;
     }
 
     public function notSuccessfulTest()
     {
-        $this->lastTestWasNotSuccessful = TRUE;
+        $this->lastTestWasNotSuccessful = true;
     }
 
-    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session = NULL)
+    public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session = null)
     {
     }
 
     public function reset()
     {
-        if( self::$session ) {
+        if (self::$session) {
             self::$session->stop();
         }
-        self::$session=null;
-        self::$mainWindow=null;
+        self::$session = null;
+        self::$mainWindow = null;
     }
-
 }

@@ -12,7 +12,7 @@ class Codex_Xtest_Xtest_Helper_Mailqueue
 
     public function getLastMail()
     {
-        return end( self::$_mailqueue );
+        return end(self::$_mailqueue);
     }
 
     public function getQueue()
@@ -20,7 +20,7 @@ class Codex_Xtest_Xtest_Helper_Mailqueue
         return self::$_mailqueue;
     }
 
-    public function addMail( Mage_Core_Model_Email_Template $mailObject, $email, $name, $variables )
+    public function addMail(Mage_Core_Model_Email_Template $mailObject, $email, $name, $variables)
     {
         if ($mailObject->isValidForSend()) {
             $emails = array_values((array)$email);
@@ -38,11 +38,11 @@ class Codex_Xtest_Xtest_Helper_Mailqueue
             $mailObject->setUseAbsoluteLinks(true);
             $text = $mailObject->getProcessedTemplate($variables, true);
 
-            if( empty($email) ) {
+            if (empty($email)) {
                 throw Mage::exception('Codex_Xtest', 'to is empty', Codex_Xtest_Exception::EMPTY_MAIL_RECIPIENT);
             }
 
-            if( empty($text) ) {
+            if (empty($text)) {
                 throw Mage::exception('Codex_Xtest', 'body is empty', Codex_Xtest_Exception::EMPTY_MAIL_BODY);
             }
 
@@ -58,7 +58,6 @@ class Codex_Xtest_Xtest_Helper_Mailqueue
 
     public function getCount()
     {
-        return count( self::$_mailqueue );
+        return count(self::$_mailqueue);
     }
-
 }

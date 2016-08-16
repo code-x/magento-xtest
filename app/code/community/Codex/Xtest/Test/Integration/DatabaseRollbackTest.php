@@ -21,15 +21,14 @@ class Codex_Xtest_Test_Integration_DatabaseRollbackTest extends Codex_Xtest_Xtes
     public function testProductRollback()
     {
         $product = Mage::getModel('catalog/product');
-        $this->assertFalse( $product->getIdBySku( self::TEST_SKU ) );
+        $this->assertFalse($product->getIdBySku(self::TEST_SKU));
 
-        $cmd = Mage::getBaseDir().'/tests/phpunit.phar '.escapeshellarg(__DIR__.'/DabaseRollbackTest/CreateProductTest.php');
+        $cmd = Mage::getBaseDir() . '/tests/phpunit.phar ' . escapeshellarg(__DIR__ . '/DabaseRollbackTest/CreateProductTest.php');
 
         $result = $return_var = null;
-        exec('php '.$cmd, $result, $return_var);
-        $this->assertEquals(0, $return_var ); // return 0 when test is succesfully
+        exec('php ' . $cmd, $result, $return_var);
+        $this->assertEquals(0, $return_var); // return 0 when test is succesfully
 
-        $this->assertFalse( $product->getIdBySku( self::TEST_SKU ) );
+        $this->assertFalse($product->getIdBySku(self::TEST_SKU));
     }
-
 }

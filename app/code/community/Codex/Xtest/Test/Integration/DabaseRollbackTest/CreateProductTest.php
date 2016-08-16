@@ -2,7 +2,6 @@
 
 class Codex_Xtest_Test_Integration_DabaseRollbackTest_CreateProductTest extends Codex_Xtest_Xtest_Unit_Frontend
 {
-
     /**
      * Test if creating a product is successfully
      */
@@ -12,10 +11,10 @@ class Codex_Xtest_Test_Integration_DabaseRollbackTest_CreateProductTest extends 
 
         $product = Mage::getModel('catalog/product');
 
-        $product->setSku( $testSku );
-        $product->setName( 'name' );
-        $product->setDescription( 'desc' );
-        $product->setShortDescription( 'desc' );
+        $product->setSku($testSku);
+        $product->setName('name');
+        $product->setDescription('desc');
+        $product->setShortDescription('desc');
         $product->setPrice(0);
         $product->setWeight(0);
         $product->setTypeId('simple');
@@ -23,7 +22,7 @@ class Codex_Xtest_Test_Integration_DabaseRollbackTest_CreateProductTest extends 
         $product->save();
 
         $product = Mage::getModel('catalog/product');
-        $this->assertNotFalse( $product->getIdBySku( $testSku ) );
+        $this->assertNotFalse($product->getIdBySku($testSku));
     }
 
     /**
@@ -32,7 +31,6 @@ class Codex_Xtest_Test_Integration_DabaseRollbackTest_CreateProductTest extends 
     public function testCreateProductStillNotExists()
     {
         $product = Mage::getModel('catalog/product');
-        $this->assertFalse( $product->getIdBySku( Codex_Xtest_Test_Integration_DatabaseRollbackTest::TEST_SKU ) );
+        $this->assertFalse($product->getIdBySku(Codex_Xtest_Test_Integration_DatabaseRollbackTest::TEST_SKU));
     }
-
 }

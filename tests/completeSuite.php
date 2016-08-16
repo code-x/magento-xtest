@@ -5,22 +5,24 @@
  *
  * @author Fabrizio Branca
  */
-class completeSuite  {
-
+class completeSuite
+{
     /**
      * Create suite from path by searching (recursive) for all Test(case).php files
      *
      * @param string $path
      * @return PHPUnit_Framework_TestSuite|false
      */
-    public static function createSuiteFromPath($path) {
+    public static function createSuiteFromPath($path)
+    {
         $tmpSuite = new PHPUnit_Framework_TestSuite();
         $somethingWasAdded = false;
         $paths = array();
         $files = array();
 
         // collect paths and files first
-        foreach (new DirectoryIterator($path) as $fileInfo) { /* @var $fileInfo SplFileInfo */
+        foreach (new DirectoryIterator($path) as $fileInfo) {
+            /* @var $fileInfo SplFileInfo */
             $fileName = $fileInfo->getFilename();
             $pathName = $fileInfo->getPathname();
 
@@ -29,12 +31,12 @@ class completeSuite  {
             }
 
             // directories and links pointing to directories
-            if ($fileInfo->isDir() || ($fileInfo->isLink() && is_dir($fileInfo->isLink()) )) {
+            if ($fileInfo->isDir() || ($fileInfo->isLink() && is_dir($fileInfo->isLink()))) {
                 $paths[] = $pathName;
             } elseif ($fileInfo->isFile()) {
                 if ((substr(strtolower($fileName), -12) == 'testcase.php') || (substr(strtolower($fileName), -8) == 'test.php')) {
 
-                    if( stripos( file_get_contents($pathName), 'ecomdev' ) === false ) {
+                    if (stripos(file_get_contents($pathName), 'ecomdev') === false) {
                         // do not add ecomdev phpunit
                         $files[] = $pathName;
                     }
@@ -73,7 +75,8 @@ class completeSuite  {
      * @param $path
      * @return mixed|string
      */
-    public static function getRelativeRealpath($path) {
+    public static function getRelativeRealpath($path)
+    {
         $path = realpath($path);
         $path = str_replace(getcwd() . DIRECTORY_SEPARATOR, '', $path);
         return $path;
@@ -92,15 +95,16 @@ class completeSuite  {
      *
      * @return PHPUnit_Framework_TestSuite|false
      */
-    public static function suite() {
+    public static function suite()
+    {
 
         $tmpSuite = new PHPUnit_Framework_TestSuite();;
 
-        $testSuiteLocal = self::createSuiteFromPath( Mage::getConfig()->getOptions()->getCodeDir().DS.'local' );
-        $testSuiteCommunity = self::createSuiteFromPath( Mage::getConfig()->getOptions()->getCodeDir().DS.'community' );
+        $testSuiteLocal = self::createSuiteFromPath(Mage::getConfig()->getOptions()->getCodeDir() . DS . 'local');
+        $testSuiteCommunity = self::createSuiteFromPath(Mage::getConfig()->getOptions()->getCodeDir() . DS . 'community');
 
-        $tmpSuite->addTestSuite( $testSuiteLocal );
-        $tmpSuite->addTestSuite( $testSuiteCommunity );
+        $tmpSuite->addTestSuite($testSuiteLocal);
+        $tmpSuite->addTestSuite($testSuiteCommunity);
 
         return $tmpSuite;
     }

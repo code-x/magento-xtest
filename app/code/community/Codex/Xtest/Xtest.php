@@ -2,7 +2,6 @@
 
 class Xtest
 {
-
     protected static $args = null;
 
     public static function initAdmin()
@@ -26,9 +25,8 @@ class Xtest
 
         Mage::register('isSecureArea', true, true);
 
-        if (Mage::getStoreConfig('xtext/force/index') )
-        {
-          Mage::register('custom_entry_point', true, true);
+        if (Mage::getStoreConfig('xtext/force/index')) {
+            Mage::register('custom_entry_point', true, true);
         }
 
         Mage::app()->loadArea(Mage_Core_Model_App_Area::AREA_FRONTEND);
@@ -45,7 +43,7 @@ class Xtest
 
         $options = array();
         $options['config_model'] = 'Codex_Xtest_Model_Core_Config';
-        $options['cache_dir'] = Mage::getBaseDir('var').DS.'cache'.DS.'xtest';
+        $options['cache_dir'] = Mage::getBaseDir('var') . DS . 'cache' . DS . 'xtest';
 
         Mage::reset();
         Mage::app($code, 'store', $options);
@@ -90,9 +88,7 @@ class Xtest
     }
 
     /**
-     * Parse input arguments
-     *
-     * @return Mage_Shell_Abstract
+     * @return $this
      */
     protected function _parseArgs()
     {
@@ -106,18 +102,20 @@ class Xtest
             } else {
                 if ($current) {
                     self::$args[$current] = $arg;
-                } else if (preg_match('#^([\w\d_]{1,})$#', $arg, $match)) {
-                    self::$args[$match[1]] = true;
+                } else {
+                    if (preg_match('#^([\w\d_]{1,})$#', $arg, $match)) {
+                        self::$args[$match[1]] = true;
+                    }
                 }
             }
         }
+
         return $this;
     }
 
-    public static function getArg($name, $default=false)
+    public static function getArg($name, $default = false)
     {
-        if( self::$args === null )
-        {
+        if (self::$args === null) {
             self::_parseArgs();
         }
 
@@ -127,5 +125,4 @@ class Xtest
 
         return $default;
     }
-
 }

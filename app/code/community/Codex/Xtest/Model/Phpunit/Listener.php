@@ -6,17 +6,11 @@ class Codex_Xtest_Model_Phpunit_Listener implements PHPUnit_Framework_TestListen
      * @var array
      */
     protected $additionalFiles = array();
-
     protected $lastResult;
-
     protected $lastStatus;
-
     protected $suiteName;
-
     protected $results = array();
-
     protected $count = array();
-
     protected $dir;
 
     public function __construct()
@@ -69,19 +63,16 @@ class Codex_Xtest_Model_Phpunit_Listener implements PHPUnit_Framework_TestListen
             $docComment = $method->getDocComment();
 
             $docComment = explode(PHP_EOL, $docComment);
-            foreach( $docComment AS $line )
-            {
+            foreach ($docComment AS $line) {
                 $line = trim($line);
                 $line = trim($line, '*');
                 $line = trim($line);
 
-                if( substr($line,0, 1) != '@' && strlen($line) > 1 ) {
+                if (substr($line, 0, 1) != '@' && strlen($line) > 1) {
                     $comment[] = $line;
                 }
             }
-
         } catch (Exception $e) {
-
         }
 
         return join(PHP_EOL, $comment);
@@ -95,7 +86,6 @@ class Codex_Xtest_Model_Phpunit_Listener implements PHPUnit_Framework_TestListen
         // store in result array
         $currentArray =& $this->results[$this->suiteName];
 
-
         if (is_null($this->lastStatus)) {
             $this->lastStatus = PHPUnit_Runner_BaseTestRunner::STATUS_PASSED;
         }
@@ -103,7 +93,7 @@ class Codex_Xtest_Model_Phpunit_Listener implements PHPUnit_Framework_TestListen
         $result = array(
             'testName' => $testName,
             'time' => $time,
-            'exception' => (string) $this->lastResult,
+            'exception' => (string)$this->lastResult,
             'status' => $this->lastStatus,
             'description' => $this->getDocComment($test),
             'screenshots' => array()
@@ -111,7 +101,7 @@ class Codex_Xtest_Model_Phpunit_Listener implements PHPUnit_Framework_TestListen
 
         if (method_exists($test, 'getScreenshots')) {
             foreach ($test->getScreenshots() AS $i => $item) {
-                $key = md5($testName.$i);
+                $key = md5($testName . $i);
                 file_put_contents($this->dir . DS . $key . '.png', $item[1]);
                 $result['screenshots'][$key] = $item[0];
             }
@@ -147,6 +137,4 @@ class Codex_Xtest_Model_Phpunit_Listener implements PHPUnit_Framework_TestListen
     {
         file_put_contents($this->dir . DS . 'log.json', json_encode($this->results));
     }
-
-
 }

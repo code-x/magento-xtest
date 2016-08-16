@@ -2,21 +2,19 @@
 
 class Codex_Xtest_Xtest_Pageobject_Frontend_Product extends Codex_Xtest_Xtest_Pageobject_Abstract
 {
-
     /** @var  Mage_Catalog_Model_Product */
     protected $_product;
 
-    public function openBySku( $sku )
+    public function openBySku($sku)
     {
-        $this->open( Mage::getModel('catalog/product')->getIdBySku( $sku ) );
+        $this->open(Mage::getModel('catalog/product')->getIdBySku($sku));
     }
 
-    public function open( $product_id )
+    public function open($product_id)
     {
-        $this->_product = Mage::getModel('catalog/product')->load( $product_id );
-        if( $this->_product->getId() )
-        {
-            $this->url( $this->_product->getProductUrl() );
+        $this->_product = Mage::getModel('catalog/product')->load($product_id);
+        if ($this->_product->getId()) {
+            $this->url($this->_product->getProductUrl());
             return $this;
         }
         throw new Exception("product not found");
@@ -28,20 +26,18 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Product extends Codex_Xtest_Xtest_Pa
         return $eForm;
     }
 
-    public function setQty( $qty )
+    public function setQty($qty)
     {
         $eQty = $this->getAddToCartForm()->byId('qty');
-        $eQty->value( $qty);
+        $eQty->value($qty);
         return $this;
     }
 
     public function pressAddToCart()
     {
-        $elements = $this->findElementsByCssSelector('.add-to-cart-buttons button', $this->getAddToCartForm() );
-        foreach( $elements AS $element )
-        {
-            if( $element->displayed() )
-            {
+        $elements = $this->findElementsByCssSelector('.add-to-cart-buttons button', $this->getAddToCartForm());
+        foreach ($elements AS $element) {
+            if ($element->displayed()) {
                 $element->click();
             }
         }
@@ -51,7 +47,7 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Product extends Codex_Xtest_Xtest_Pa
     public function assertAddToCartMessageAppears()
     {
         $addToCartText = $this->byCssSelector('ul.messages li.success-msg')->text();
-        $this->assertStringEndsWith( Mage::helper('checkout')->__("%s was added to your shopping cart.",''), $addToCartText );
+        $this->assertStringEndsWith(Mage::helper('checkout')->__("%s was added to your shopping cart.", ''), $addToCartText);
         return $this;
     }
 
@@ -59,5 +55,4 @@ class Codex_Xtest_Xtest_Pageobject_Frontend_Product extends Codex_Xtest_Xtest_Pa
     {
         return $this->byCssSelector('.product-name')->text();
     }
-
 }

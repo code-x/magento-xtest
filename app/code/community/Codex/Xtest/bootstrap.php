@@ -1,17 +1,15 @@
 <?php
 
-$mageFile = dirname( getcwd() ) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Mage.php';
-if( file_exists( $mageFile ) ) {
+$mageFile = dirname(getcwd()) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Mage.php';
+if (file_exists($mageFile)) {
 
-    $_SERVER['SCRIPT_FILENAME'] = NULL;
+    $_SERVER['SCRIPT_FILENAME'] = null;
     require_once $mageFile;
-    require_once __DIR__.DS.'Xtest.php';
+    require_once __DIR__ . DS . 'Xtest.php';
 
-    Mage::app('admin', 'store', array( 'config_model' => 'Codex_Xtest_Model_Core_Config' ));
+    Mage::app('admin', 'store', array('config_model' => 'Codex_Xtest_Model_Core_Config'));
 
     define('XTEST_BOOTSTRAPPED', true);
-
 } else {
     throw new Exception("Mage.php not found.");
 }
-

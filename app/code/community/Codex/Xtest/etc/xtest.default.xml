@@ -1,29 +1,21 @@
 <?xml version="1.0"?>
 <config>
-
-
     <default>
         <xtest>
-
             <selenium>
                 <screenshot>
                     <breakpoints>450x1024,1280x1024</breakpoints>
                 </screenshot>
-
                 <browserstack>
                     <host>hub.browserstack.com</host>
                     <port>80</port>
-
                     <authfile>/etc/browserstack</authfile>
                 </browserstack>
-
                 <browserlist>
-
                     <firefox>
                         <name>firefox</name>
                         <is_browserstack>0</is_browserstack>
                     </firefox>
-
                     <bs_chrome>
                         <name>Chrome</name>
                         <capabilities>
@@ -31,7 +23,6 @@
                         </capabilities>
                         <is_browserstack>1</is_browserstack>
                     </bs_chrome>
-
                     <bs_firefox>
                         <name>Firefox</name>
                         <capabilities>
@@ -39,7 +30,6 @@
                         </capabilities>
                         <is_browserstack>1</is_browserstack>
                     </bs_firefox>
-
                     <bs_ie8>
                         <name>IE</name>
                         <capabilities>
@@ -51,7 +41,6 @@
                         </capabilities>
                         <is_browserstack>1</is_browserstack>
                     </bs_ie8>
-
                     <bs_ie9>
                         <name>IE</name>
                         <capabilities>
@@ -63,7 +52,6 @@
                         </capabilities>
                         <is_browserstack>1</is_browserstack>
                     </bs_ie9>
-
                     <bs_ie10>
                         <name>IE</name>
                         <capabilities>
@@ -75,7 +63,6 @@
                         </capabilities>
                         <is_browserstack>1</is_browserstack>
                     </bs_ie10>
-
                     <bs_ie11>
                         <name>IE</name>
                         <capabilities>
@@ -87,18 +74,13 @@
                         </capabilities>
                         <is_browserstack>1</is_browserstack>
                     </bs_ie11>
-
                 </browserlist>
-
             </selenium>
-
             <fixtures>
-
                 <customer>
                     <email>devnull@code-x.de</email>
                     <firstname>Test Vorname</firstname>
                     <lastname>Test Nachname</lastname>
-
                     <billing_address>
                         <firstname>Xtest Firstname</firstname>
                         <lastname>Xtest Lastname</lastname>
@@ -109,7 +91,6 @@
                         <country_id>DE</country_id>
                         <region_id>88</region_id>
                     </billing_address>
-
                     <shipping_address>
                         <firstname>Xtest Firstname</firstname>
                         <lastname>Xtest Lastname</lastname>
@@ -120,18 +101,14 @@
                         <country_id>DE</country_id>
                         <region_id>88</region_id>
                     </shipping_address>
-
                 </customer>
-
                 <order>
-
                     <customer_id>0</customer_id>
                     <customer_data>
                         <email>devnull@code-x.de</email>
                         <firstname>Test Vorname</firstname>
                         <lastname>Test Nachname</lastname>
                     </customer_data>
-
                     <payment_method>
                         <method>cashondelivery</method>
                         <debit_cc_owner>Test</debit_cc_owner>
@@ -139,11 +116,9 @@
                         <debit_swift>Test</debit_swift>
                         <!-- some other options-->
                     </payment_method>
-
                     <shipping_method>
                         <method>flatrate_flatrate</method>
                     </shipping_method>
-
                     <billing_address>
                         <firstname>Xtest Firstname</firstname>
                         <lastname>Xtest Lastname</lastname>
@@ -154,7 +129,6 @@
                         <country_id>DE</country_id>
                         <region_id>88</region_id>
                     </billing_address>
-
                     <shipping_address>
                         <firstname>Xtest Firstname</firstname>
                         <lastname>Xtest Lastname</lastname>
@@ -165,7 +139,6 @@
                         <country_id>DE</country_id>
                         <region_id>88</region_id>
                     </shipping_address>
-
                     <items>
                         <!--
                         <item>
@@ -174,7 +147,6 @@
                         </item>
                         -->
                     </items>
-
                 </order>
             </fixtures>
         </xtest>

@@ -24,14 +24,12 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-
 /**
  * Resources and connections registry and factory
  *
  */
 class Codex_Xtest_Model_Core_Resource extends Mage_Core_Model_Resource
 {
-
     /**
      * Creates a connection to resource whenever needed
      *
@@ -40,10 +38,9 @@ class Codex_Xtest_Model_Core_Resource extends Mage_Core_Model_Resource
      */
     public function getConnection($name)
     {
-        if( defined('XTEST_BOOTSTRAPPED') ) {
+        if (defined('XTEST_BOOTSTRAPPED')) {
             static $connection;
-            if( !$connection )
-            {
+            if (!$connection) {
                 $connection = parent::getConnection('core_write');
             }
             return $connection;
@@ -51,5 +48,4 @@ class Codex_Xtest_Model_Core_Resource extends Mage_Core_Model_Resource
 
         return parent::getConnection($name);
     }
-
 }
